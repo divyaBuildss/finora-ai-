@@ -28,3 +28,5 @@ dist-ssr
 
 # Reports
 eslint-report.txt
+
+testsprite_tests/tmp/config.json

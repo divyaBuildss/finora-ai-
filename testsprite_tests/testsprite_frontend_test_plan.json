@@ -1,0 +1,1653 @@
+[
+  {
+    "id": "TC001",
+    "title": "Sign up with email and password",
+    "description": "A new visitor can create an account with email and password and reach the authenticated workspace successfully.",
+    "category": "User Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /signup"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign up form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the authenticated workspace is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the onboarding flow or dashboard"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Log in with email and password",
+    "description": "An existing user can sign in with email and password and reach the authenticated workspace successfully.",
+    "category": "User Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the authenticated workspace is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user lands on the dashboard or onboarding flow"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Complete first-time onboarding",
+    "description": "A new authenticated user can finish onboarding by selecting goals, entering income, choosing risk profile, and reaching the main app.",
+    "category": "Onboarding Setup",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Select financial goals"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the monthly income field with a valid amount"
+      },
+      {
+        "type": "action",
+        "description": "Select a risk profile"
+      },
+      {
+        "type": "action",
+        "description": "Complete the profile setup"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the onboarding flow is completed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "View dashboard financial overview",
+    "description": "An authenticated user can open the dashboard and review the main financial overview, including key metrics and recent activity.",
+    "category": "Wealth Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard financial overview metrics are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify recent transaction summaries are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Add a transaction and see it in the expenses list",
+    "description": "This test verifies that an authenticated user can create an expense with required details and see it added to the transactions list.",
+    "category": "Expense Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the expenses navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the transaction description field with a new expense name"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the amount field with a valid amount"
+      },
+      {
+        "type": "action",
+        "description": "Select a category for the transaction"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a valid date into the transaction date field"
+      },
+      {
+        "type": "action",
+        "description": "Add the transaction"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new transaction appears in the transactions list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Create a savings goal",
+    "description": "Verifies that a user can create a new savings goal and see it added to the goals tracker.",
+    "category": "Goals Tracker",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for an authenticated member"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /goals"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the goal title"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the target amount"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the current balance"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a valid deadline"
+      },
+      {
+        "type": "action",
+        "description": "Create the goal"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new goal is displayed in the tracker"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the goal summary reflects the created savings plan"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Update budget category spending",
+    "description": "An authenticated user can change a budget amount for a category and see the updated budget status reflected on the page.",
+    "category": "Budget Planner",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open budget planning"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a category budget amount with a valid value"
+      },
+      {
+        "type": "action",
+        "description": "Save the budget changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated budget category is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify budget tracking reflects the change"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Project future wealth from SIP inputs",
+    "description": "Verifies that a user can enter investment assumptions and see the projected future wealth update accordingly.",
+    "category": "Investments and Projection",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for an authenticated member"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /investments"
+      },
+      {
+        "type": "action",
+        "description": "Enter a monthly SIP contribution amount"
+      },
+      {
+        "type": "action",
+        "description": "Adjust the return rate"
+      },
+      {
+        "type": "action",
+        "description": "Adjust the investment duration"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the projected future wealth total is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the forecast updates to reflect the selected inputs"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Access the AI advisor chat and receive guidance",
+    "description": "This test verifies that an authenticated user can open the AI advisor, ask a finance question, and see a helpful response appear in the conversation.",
+    "category": "AI Advisor Chat",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the AI advisor navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the chat message field with a finance question"
+      },
+      {
+        "type": "action",
+        "description": "Send the message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an advisor response is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Go from dashboard to another workspace section",
+    "description": "An authenticated user can move from the dashboard to another core finance section and see that workspace page load correctly.",
+    "category": "Wealth Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open budget planning"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the budget planning page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify budget tracking content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Edit goal progress details",
+    "description": "Verifies that a user can update an existing goal and see the tracker reflect the changes.",
+    "category": "Goals Tracker",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for an authenticated member"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /goals"
+      },
+      {
+        "type": "action",
+        "description": "Create a goal with valid details"
+      },
+      {
+        "type": "action",
+        "description": "Select the goal for editing"
+      },
+      {
+        "type": "action",
+        "description": "Update the progress or goal details"
+      },
+      {
+        "type": "action",
+        "description": "Save the goal changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the goal remains displayed in the tracker"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated goal information is reflected"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Delete an expense from the transactions list",
+    "description": "This test verifies that an authenticated user can remove an existing transaction and no longer see it in the list.",
+    "category": "Expense Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the expenses navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Add a transaction with valid details"
+      },
+      {
+        "type": "action",
+        "description": "Click the delete control for that transaction"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the transaction is no longer visible in the transactions list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Update a category budget and see progress refresh",
+    "description": "This test verifies that an authenticated user can change a budget limit and see the budget progress update on save.",
+    "category": "Budget Planning",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the budget navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Update a category budget limit with a valid value"
+      },
+      {
+        "type": "action",
+        "description": "Save the changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify updated budget progress is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Ask the AI advisor a finance question",
+    "description": "An authenticated user can send a finance question to the AI advisor and see a response in the chat thread.",
+    "category": "AI Advisor",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the AI advisor"
+      },
+      {
+        "type": "action",
+        "description": "Type a finance question into the chat input"
+      },
+      {
+        "type": "action",
+        "description": "Send the chat message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user's question is displayed in the conversation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an advisor response is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "Update the projection after changing assumptions",
+    "description": "Verifies that changing the investment settings on the calculator updates the forecast without leaving the page.",
+    "category": "Investments and Projection",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for an authenticated member"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /investments"
+      },
+      {
+        "type": "action",
+        "description": "Enter a monthly SIP contribution amount"
+      },
+      {
+        "type": "action",
+        "description": "Adjust the return rate"
+      },
+      {
+        "type": "action",
+        "description": "Adjust the investment duration"
+      },
+      {
+        "type": "action",
+        "description": "Change the return rate again"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the projected future wealth total is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated forecast reflects the revised settings"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "Update goal progress",
+    "description": "An authenticated user can update progress on an existing savings goal and see the progress state reflected in the goals view.",
+    "category": "Goals",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open goals"
+      },
+      {
+        "type": "action",
+        "description": "Create a savings goal"
+      },
+      {
+        "type": "action",
+        "description": "Update the goal progress with a valid amount"
+      },
+      {
+        "type": "action",
+        "description": "Save the goal changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the goal progress is updated"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the goal status is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC017",
+    "title": "Create a savings goal and see it added to goals",
+    "description": "This test verifies that an authenticated user can create a new savings goal and see it appear in the goals list.",
+    "category": "Savings Goals",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the goals navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Create a new savings goal with valid details"
+      },
+      {
+        "type": "action",
+        "description": "Save the goal"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new goal appears in the goals list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC018",
+    "title": "Update profile settings successfully",
+    "description": "An authenticated user can change profile settings and see the updated information reflected on the profile page.",
+    "category": "User Profile",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the profile page"
+      },
+      {
+        "type": "action",
+        "description": "Update a profile setting"
+      },
+      {
+        "type": "action",
+        "description": "Save the profile changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated profile information is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a success confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC019",
+    "title": "Delete a savings goal",
+    "description": "Verifies that a user can remove an existing goal and no longer see it in the tracker.",
+    "category": "Goals Tracker",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for an authenticated member"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /goals"
+      },
+      {
+        "type": "action",
+        "description": "Create a goal with valid details"
+      },
+      {
+        "type": "action",
+        "description": "Select the goal for removal"
+      },
+      {
+        "type": "action",
+        "description": "Delete the goal"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the goal is removed from the tracker"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the tracker shows the remaining goals or empty state"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC020",
+    "title": "Review spending reports and export them",
+    "description": "An authenticated user can open reports, review spending charts, and export the report successfully.",
+    "category": "Reports",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open reports"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the spending report charts"
+      },
+      {
+        "type": "action",
+        "description": "Export the report"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify spending report charts are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an export confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC021",
+    "title": "Continue an AI advisor conversation",
+    "description": "This test verifies that an authenticated user can ask a follow-up question and review the conversation history with multiple messages visible.",
+    "category": "AI Advisor Chat",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the AI advisor navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the chat message field with a first finance question"
+      },
+      {
+        "type": "action",
+        "description": "Send the message"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the chat message field with a follow-up finance question"
+      },
+      {
+        "type": "action",
+        "description": "Send the message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify multiple messages are visible in the conversation history"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC022",
+    "title": "Preserve profile changes after page revisit",
+    "description": "An authenticated user can save profile updates and later revisit the profile page to confirm the changes remain visible.",
+    "category": "User Profile",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the profile page"
+      },
+      {
+        "type": "action",
+        "description": "Update a profile setting"
+      },
+      {
+        "type": "action",
+        "description": "Save the profile changes"
+      },
+      {
+        "type": "action",
+        "description": "Refresh the profile page through normal navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated profile information is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC023",
+    "title": "View spending charts and budget breakdowns",
+    "description": "Verifies that a user can open the reports page and review the spending visualizations and breakdowns.",
+    "category": "PDF Spending Reports",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for an authenticated member"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /reports"
+      },
+      {
+        "type": "action",
+        "description": "Review the spending charts"
+      },
+      {
+        "type": "action",
+        "description": "Review the budget breakdowns"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the report charts are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify spending and budget summary data is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC024",
+    "title": "Update progress on an existing savings goal",
+    "description": "This test verifies that an authenticated user can change a goal's progress and see the updated status reflected in the goals view.",
+    "category": "Savings Goals",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the goals navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Update an existing goal's progress with a valid value"
+      },
+      {
+        "type": "action",
+        "description": "Save the changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the goal progress is updated"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC025",
+    "title": "View profile details",
+    "description": "An authenticated user can open the profile page and review their current profile information.",
+    "category": "User Profile",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the profile page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify profile details are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the profile settings section is available"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC026",
+    "title": "Review spending against budget limits",
+    "description": "This test verifies that an authenticated user can open the budget planner and review category spending progress without making changes.",
+    "category": "Budget Planning",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the budget navigation link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify budget progress bars are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC027",
+    "title": "Export the report as a PDF",
+    "description": "Verifies that a user can export the current spending report as a PDF from the reports page.",
+    "category": "PDF Spending Reports",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for an authenticated member"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /reports"
+      },
+      {
+        "type": "action",
+        "description": "Click the PDF export control"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the report export action completes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the PDF export option is available from the reports page"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC028",
+    "title": "Use AI advice to guide a budget update",
+    "description": "This test verifies that an authenticated user can ask for budgeting advice in the AI advisor and then navigate to the budget planner to apply it.",
+    "category": "AI Advisor Chat",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the AI advisor navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the chat message field with a budgeting question"
+      },
+      {
+        "type": "action",
+        "description": "Send the message"
+      },
+      {
+        "type": "action",
+        "description": "Click the budget navigation link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the budget planner is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC029",
+    "title": "Open profile from authenticated workspace navigation",
+    "description": "An authenticated user can reach the profile page from the workspace navigation and see their account information.",
+    "category": "User Profile",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation item for the profile page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify profile details are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC030",
+    "title": "Remove a savings goal",
+    "description": "This test verifies that an authenticated user can delete a goal and no longer see it in the goals list.",
+    "category": "Savings Goals",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the goals navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Create a new savings goal with valid details"
+      },
+      {
+        "type": "action",
+        "description": "Delete that goal"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the goal is no longer visible in the goals list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC031",
+    "title": "Export the report as a PNG",
+    "description": "Verifies that a user can export the current spending report as a PNG image from the reports page.",
+    "category": "PDF Spending Reports",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials for an authenticated member"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /reports"
+      },
+      {
+        "type": "action",
+        "description": "Click the PNG export control"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the report export action completes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the PNG export option is available from the reports page"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC032",
+    "title": "Handle impossible goal targets or deadlines",
+    "description": "An authenticated user sees validation when entering an impossible goal target or deadline, preventing the goal from being created.",
+    "category": "Goals",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open goals"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the goal name field with Invalid Goal"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the target amount field with an invalid value"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the deadline field with an invalid date"
+      },
+      {
+        "type": "action",
+        "description": "Create the goal"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a goal validation error is visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC033",
+    "title": "Keep profile form usable after validation correction",
+    "description": "An authenticated user can correct an invalid profile input and successfully save the updated profile information.",
+    "category": "User Profile",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the profile page"
+      },
+      {
+        "type": "action",
+        "description": "Enter an invalid value into a profile setting that has validation"
+      },
+      {
+        "type": "action",
+        "description": "Correct the profile setting with a valid value"
+      },
+      {
+        "type": "action",
+        "description": "Save the profile changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated profile information is displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC034",
+    "title": "Reject invalid budget values",
+    "description": "An authenticated user sees validation when entering zero or negative budget values, preventing invalid budget settings from being saved.",
+    "category": "Budget Planner",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open budget planning"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a category budget amount with zero or a negative value"
+      },
+      {
+        "type": "action",
+        "description": "Save the budget changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a budget validation error is visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC035",
+    "title": "Show and hide password entry",
+    "description": "A user can toggle password visibility on the login form and confirm the password field changes visibility state.",
+    "category": "User Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Toggle password visibility"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the password entry is visible"
+      },
+      {
+        "type": "action",
+        "description": "Toggle password visibility"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the password entry is hidden"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC036",
+    "title": "Reject incomplete expense details",
+    "description": "This test verifies that an authenticated user cannot add an expense when required transaction fields are missing and sees validation feedback.",
+    "category": "Expense Management",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the expenses navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the transaction description field with a new expense name"
+      },
+      {
+        "type": "action",
+        "description": "Add the transaction"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a transaction validation error is visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC037",
+    "title": "Handle missing expense fields",
+    "description": "An authenticated user sees validation when trying to save an expense without the required fields, preventing an incomplete transaction from being added.",
+    "category": "Expenses",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign in form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open expenses"
+      },
+      {
+        "type": "action",
+        "description": "Submit the expense form without filling required fields"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an expense validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no new transaction is added"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC038",
+    "title": "Block invalid budget values",
+    "description": "This test verifies that an authenticated user sees validation feedback when entering an invalid budget limit and cannot save it.",
+    "category": "Budget Planning",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the budget navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Update a category budget limit with an invalid value"
+      },
+      {
+        "type": "action",
+        "description": "Save the changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a budget validation error is visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC039",
+    "title": "Cancel profile changes by leaving settings unchanged",
+    "description": "An authenticated user can open the profile page and leave without saving to keep the existing profile information intact.",
+    "category": "User Profile",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to open the profile page"
+      },
+      {
+        "type": "action",
+        "description": "Make a temporary change to a profile setting"
+      },
+      {
+        "type": "action",
+        "description": "Discard the unsaved change"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the original profile information is still displayed"
+      }
+    ],
+    "priority": "Low"
+  }
+]

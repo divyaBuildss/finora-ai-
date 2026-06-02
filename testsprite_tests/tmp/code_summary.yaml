@@ -1,0 +1,166 @@
+version: "2"
+type: frontend
+tech_stack:
+  - JavaScript
+  - React
+  - React Router DOM
+  - Tailwind CSS
+  - Firebase
+  - Recharts
+routes:
+  - path: /
+    file: src/pages/Landing.jsx
+    auth_required: false
+    description: Public landing page
+  - path: /login
+    file: src/pages/Login.jsx
+    auth_required: false
+    description: User authentication login page
+  - path: /signup
+    file: src/pages/Signup.jsx
+    auth_required: false
+    description: User authentication signup page
+  - path: /onboarding
+    file: src/pages/Onboarding.jsx
+    auth_required: true
+    description: First-time user onboarding setup
+  - path: /dashboard
+    file: src/pages/Dashboard.jsx
+    auth_required: true
+    description: Financial overview dashboard
+  - path: /ai-advisor
+    file: src/pages/AIAdvisor.jsx
+    auth_required: true
+    description: AI Wealth Advisor chat room
+  - path: /expenses
+    file: src/pages/Expenses.jsx
+    auth_required: true
+    description: Expense management and list
+  - path: /budget
+    file: src/pages/BudgetPlanner.jsx
+    auth_required: true
+    description: Budget planning and tracking
+  - path: /investments
+    file: src/pages/InvestmentAdvisor.jsx
+    auth_required: true
+    description: Investment advisor and SIP calculator
+  - path: /goals
+    file: src/pages/Goals.jsx
+    auth_required: true
+    description: Saving goals tracker
+  - path: /reports
+    file: src/pages/Reports.jsx
+    auth_required: true
+    description: Visual spending reports and pdf export
+  - path: /profile
+    file: src/pages/Profile.jsx
+    auth_required: true
+    description: User profile and settings page
+features:
+  - name: User Authentication
+    description: Sign in or sign up using email and password credentials
+    files:
+      - src/pages/Login.jsx
+      - src/pages/Signup.jsx
+      - src/services/authService.js
+    entry_route: /login
+    user_interactions:
+      - Fill email input field
+      - Fill password input field
+      - Click Sign In or Sign Up button
+      - Toggle password visibility
+    api_calls: []
+    auth_required: false
+  - name: Onboarding Setup
+    description: Set up initial financial profile
+    files:
+      - src/pages/Onboarding.jsx
+    entry_route: /onboarding
+    user_interactions:
+      - Select financial goals checkbox
+      - Enter monthly income input
+      - Select risk profile radio button
+      - Click Complete Profile button
+    api_calls: []
+    auth_required: true
+  - name: Wealth Dashboard
+    description: Main financial overview showing score, net worth, savings, and transactions
+    files:
+      - src/pages/Dashboard.jsx
+    entry_route: /dashboard
+    user_interactions:
+      - View active budgets and net worth
+      - Navigate to various management sub-sections
+    api_calls: []
+    auth_required: true
+  - name: AI Advisor Chat
+    description: Chat with AI Companion for financial suggestions
+    files:
+      - src/pages/AIAdvisor.jsx
+      - src/services/geminiService.js
+    entry_route: /ai-advisor
+    user_interactions:
+      - Fill query message in text input field
+      - Click send button
+      - View advisor message responses
+    api_calls: []
+    auth_required: true
+  - name: Expense Management
+    description: Track, add, and delete personal transactions
+    files:
+      - src/pages/Expenses.jsx
+      - src/services/databaseService.js
+    entry_route: /expenses
+    user_interactions:
+      - Enter transaction description, amount, category, and date
+      - Click Add Transaction button
+      - View transactions lists
+      - Click delete icon to remove a transaction
+    api_calls: []
+    auth_required: true
+  - name: Budget Planning
+    description: Set limits and monitor spending per category
+    files:
+      - src/pages/BudgetPlanner.jsx
+    entry_route: /budget
+    user_interactions:
+      - Update budget limit values in inputs
+      - Click save changes button
+      - View budget progression bars
+    api_calls: []
+    auth_required: true
+  - name: Investments and Projection
+    description: Visual portfolio analysis and compound interest calculator
+    files:
+      - src/pages/InvestmentAdvisor.jsx
+    entry_route: /investments
+    user_interactions:
+      - Enter SIP monthly contribution amount
+      - Adjust return rate and duration sliders
+      - Check projected future wealth total
+    api_calls: []
+    auth_required: true
+  - name: Goals Tracker
+    description: Add, update, and track milestone goals
+    files:
+      - src/pages/Goals.jsx
+    entry_route: /goals
+    user_interactions:
+      - Fill goal title, target, current balance, and deadline
+      - Click Create Goal button
+      - Click Edit or Update Progress for a goal
+      - Click Delete Goal button
+    api_calls: []
+    auth_required: true
+  - name: PDF Spending Reports
+    description: Interactive charts and export capability
+    files:
+      - src/pages/Reports.jsx
+    entry_route: /reports
+    user_interactions:
+      - View Recharts breakdown of expenses vs budget limits
+      - Click Download PDF report button
+      - Click Download PNG report button
+    api_calls: []
+    auth_required: true
+known_limitations: []
