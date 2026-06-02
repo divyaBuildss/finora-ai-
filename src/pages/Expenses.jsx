@@ -8,6 +8,7 @@ import EmptyState from '../components/EmptyState';
 import { databaseService } from '../services/databaseService';
 import { useAuth } from '../hooks/useAuth';
 import { formatINR } from '../utils/helpers';
+import { detectSubscriptions } from '../utils/subscriptionDetector';
 
 export default function Expenses() {
   const { currentUser } = useAuth();
@@ -124,6 +125,9 @@ export default function Expenses() {
   });
 
   const maxSpentInCategory = Math.max(...categoryChartData.map(c => c.total), 1);
+
+  const activeSubscriptions = detectSubscriptions(expenses);
+  const totalSubscriptionCost = activeSubscriptions.reduce((sum, sub) => sum + sub.amount, 0);
 
   return (
     <div className="bg-surface-container-lowest text-on-surface min-h-screen">
@@ -257,6 +261,44 @@ export default function Expenses() {
                   </Button>
                 </div>
               </form>
+            </div>
+
+            {/* Active Subscriptions Card */}
+            <div className="glass-card p-6 rounded-2xl h-fit space-y-4 animate-fade-in">
+              <h3 className="font-bold text-sm uppercase tracking-wider text-secondary flex items-center gap-2">
+                <span className="material-symbols-outlined text-secondary text-[18px]">autorenew</span>
+                Active Subscriptions
+              </h3>
+              
+              {activeSubscriptions.length === 0 ? (
+                <p className="text-xs text-on-surface-variant italic py-2">No recurring subscriptions detected</p>
+              ) : (
+                <div className="space-y-3">
+                  <div className="divide-y divide-subtle">
+                    {activeSubscriptions.map((sub, idx) => (
+                      <div key={idx} className="py-2.5 flex justify-between items-center text-xs">
+                        <div>
+                          <p className="font-bold text-on-surface">{sub.name}</p>
+                          <span className="text-[9px] text-on-surface-variant uppercase tracking-wider">
+                            Last Paid: {sub.lastPaid}
+                          </span>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold text-secondary font-mono">{formatINR(sub.amount)}</p>
+                          <span className="text-[9px] text-on-surface-variant uppercase">Monthly</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="pt-3 border-t border-subtle flex justify-between items-center text-xs">
+                    <span className="font-bold text-on-surface-variant uppercase">Total Monthly Cost:</span>
+                    <span className="font-bold font-mono text-secondary text-sm">
+                      {formatINR(totalSubscriptionCost)}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* List Column */}
