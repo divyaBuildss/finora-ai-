@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
@@ -8,7 +8,7 @@ const firebaseConfig = {
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "finora-ai-prod.firebaseapp.com",
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "finora-ai-prod",
   storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "finora-ai-prod.appspot.com",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_ID || "1234567890",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "1234567890",
   appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:1234567890:web:abcdef123456"
 };
 
@@ -18,7 +18,7 @@ let db;
 
 try {
   // Initialize Firebase app
-  app = initializeApp(firebaseConfig);
+  app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
   auth = getAuth(app);
   db = getFirestore(app);
   console.log("Firebase has been initialized successfully.");

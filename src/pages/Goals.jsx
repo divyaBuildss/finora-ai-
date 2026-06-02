@@ -7,6 +7,7 @@ import Skeleton from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
 import { databaseService } from '../services/databaseService';
 import { geminiService } from '../services/geminiService';
+import { useAuth } from '../hooks/useAuth';
 import { formatINR } from '../utils/helpers';
 
 const getRemainingMonths = (deadlineStr) => {
@@ -19,6 +20,7 @@ const getRemainingMonths = (deadlineStr) => {
 };
 
 export default function Goals() {
+  const { currentUser } = useAuth();
   const [goals, setGoals] = useState([]);
   const [name, setName] = useState('');
   const [target, setTarget] = useState('');
@@ -34,7 +36,8 @@ export default function Goals() {
   useEffect(() => {
     const fetchGoals = async () => {
       try {
-        const data = await databaseService.getGoals();
+        const uid = currentUser?.uid || 'demo_user';
+        const data = await databaseService.getGoals(uid);
         setGoals(data);
       } catch (err) {
         console.error(err);
@@ -43,18 +46,19 @@ export default function Goals() {
       }
     };
     fetchGoals();
-  }, []);
+  }, [currentUser]);
 
   const handleCreate = async (e) => {
     e.preventDefault();
     if (!name || !target || !current || !deadline) return;
 
+    const uid = currentUser?.uid || 'demo_user';
     const newGoal = await databaseService.saveGoal({
       name,
       target: parseFloat(target),
       current: parseFloat(current),
       deadline
-    });
+    }, uid);
 
     setGoals(prev => [...prev, newGoal]);
     setName('');
@@ -67,7 +71,8 @@ export default function Goals() {
     e.preventDefault();
     if (!updateGoalId || !updateAmt) return;
 
-    const updated = await databaseService.updateGoalProgress(updateGoalId, parseFloat(updateAmt));
+    const uid = currentUser?.uid || 'demo_user';
+    const updated = await databaseService.updateGoalProgress(updateGoalId, parseFloat(updateAmt), uid);
     setGoals(updated);
     setUpdateGoalId('');
     setUpdateAmt('');

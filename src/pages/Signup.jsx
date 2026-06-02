@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { parseFirebaseError } from '../services/firebase';
 import Navbar from '../components/Navbar';
 import Button from '../components/Button';

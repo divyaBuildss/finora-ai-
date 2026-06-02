@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
+import { useAuth } from './hooks/useAuth';
+import ErrorBoundary from './components/ErrorBoundary';
 
 // Import Pages
 import Landing from './pages/Landing';
@@ -30,72 +32,74 @@ function ProtectedRoute({ children }) {
 export default function App() {
   return (
     <AuthProvider>
-      <Router>
-        <Routes>
-          {/* Public Views */}
-          <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          
-          {/* Protected Views */}
-          <Route path="/onboarding" element={
-            <ProtectedRoute>
-              <Onboarding />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/ai-advisor" element={
-            <ProtectedRoute>
-              <AIAdvisor />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/expenses" element={
-            <ProtectedRoute>
-              <Expenses />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/budget" element={
-            <ProtectedRoute>
-              <BudgetPlanner />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/investments" element={
-            <ProtectedRoute>
-              <InvestmentAdvisor />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/goals" element={
-            <ProtectedRoute>
-              <Goals />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/reports" element={
-            <ProtectedRoute>
-              <Reports />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/profile" element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          } />
+      <ErrorBoundary>
+        <Router>
+          <Routes>
+            {/* Public Views */}
+            <Route path="/" element={<Landing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            
+            {/* Protected Views */}
+            <Route path="/onboarding" element={
+              <ProtectedRoute>
+                <Onboarding />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/ai-advisor" element={
+              <ProtectedRoute>
+                <AIAdvisor />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/expenses" element={
+              <ProtectedRoute>
+                <Expenses />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/budget" element={
+              <ProtectedRoute>
+                <BudgetPlanner />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/investments" element={
+              <ProtectedRoute>
+                <InvestmentAdvisor />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/goals" element={
+              <ProtectedRoute>
+                <Goals />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/reports" element={
+              <ProtectedRoute>
+                <Reports />
+              </ProtectedRoute>
+            } />
+            
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
 
-          {/* Catch-all Fallback */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
+            {/* Catch-all Fallback */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
+      </ErrorBoundary>
     </AuthProvider>
   );
 }

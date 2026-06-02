@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import Skeleton from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
 import { databaseService } from '../services/databaseService';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { formatINR } from '../utils/helpers';
 
 export default function Expenses() {

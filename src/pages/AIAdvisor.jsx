@@ -4,9 +4,7 @@ import Sidebar from '../components/Sidebar';
 import Button from '../components/Button';
 import { geminiService } from '../services/geminiService';
 import { databaseService } from '../services/databaseService';
-import { useAuth } from '../context/AuthContext';
-import { collection, addDoc, getDocs, query, orderBy, limit, deleteDoc } from 'firebase/firestore';
-import { db } from '../services/firebase';
+import { useAuth } from '../hooks/useAuth';
 import ReactMarkdown from 'react-markdown';
 
 export default function AIAdvisor() {
@@ -38,43 +36,18 @@ export default function AIAdvisor() {
         const goalsData = await databaseService.getGoals(currentUser?.uid || 'demo_user');
         setGoals(goalsData);
 
-        // Load chat history from Firestore or localStorage fallback
-        if (isOfflineMode || !currentUser) {
-          const storedHistory = localStorage.getItem(`finora_chat_history_${currentUser?.uid || 'demo'}`);
-          if (storedHistory) {
-            setMessages(JSON.parse(storedHistory));
-          } else {
-            setMessages([
-              { 
-                sender: 'advisor', 
-                text: 'Welcome to your private advisory chamber. I have synthesized your net worth profiles and asset allocation pipelines. Ask me anything regarding equity rebalancing, tax structures, or capital optimization.',
-                timestamp: new Date().toISOString()
-              }
-            ]);
-          }
+        // Load chat history from databaseService
+        const historyList = await databaseService.loadChatHistory(currentUser?.uid || 'demo_user');
+        if (historyList.length > 0) {
+          setMessages(historyList);
         } else {
-          const q = query(
-            collection(db, 'users', currentUser.uid, 'chats'),
-            orderBy('timestamp', 'asc'),
-            limit(20)
-          );
-          const querySnapshot = await getDocs(q);
-          const historyList = [];
-          querySnapshot.forEach((doc) => {
-            historyList.push(doc.data());
-          });
-
-          if (historyList.length > 0) {
-            setMessages(historyList);
-          } else {
-            const welcomeMsg = { 
-              sender: 'advisor', 
-              text: 'Welcome to your private advisory chamber. I have synthesized your net worth profiles and asset allocation pipelines. Ask me anything regarding equity rebalancing, tax structures, or capital optimization.',
-              timestamp: new Date().toISOString()
-            };
-            setMessages([welcomeMsg]);
-            await addDoc(collection(db, 'users', currentUser.uid, 'chats'), welcomeMsg);
-          }
+          const welcomeMsg = { 
+            sender: 'advisor', 
+            text: 'Welcome to your private advisory chamber. I have synthesized your net worth profiles and asset allocation pipelines. Ask me anything regarding equity rebalancing, tax structures, or capital optimization.',
+            timestamp: new Date().toISOString()
+          };
+          setMessages([welcomeMsg]);
+          await databaseService.saveChatHistory(welcomeMsg, currentUser?.uid || 'demo_user');
         }
       } catch (err) {
         console.error("Failed to load chat history", err);
@@ -88,14 +61,8 @@ export default function AIAdvisor() {
   }, [messages, loading]);
 
   const saveMessage = async (msg) => {
-    if (isOfflineMode || !currentUser) {
-      const updated = [...messages, msg];
-      setMessages(updated);
-      localStorage.setItem(`finora_chat_history_${currentUser?.uid || 'demo'}`, JSON.stringify(updated));
-    } else {
-      setMessages(prev => [...prev, msg]);
-      await addDoc(collection(db, 'users', currentUser.uid, 'chats'), msg);
-    }
+    setMessages(prev => [...prev, msg]);
+    await databaseService.saveChatHistory(msg, currentUser?.uid || 'demo_user');
   };
 
   const handleSend = async (e) => {
@@ -131,16 +98,8 @@ export default function AIAdvisor() {
         timestamp: new Date().toISOString() 
       };
       
-      if (isOfflineMode || !currentUser) {
-        const storedHistory = localStorage.getItem(`finora_chat_history_${currentUser?.uid || 'demo'}`);
-        const currentList = storedHistory ? JSON.parse(storedHistory) : [];
-        const updated = [...currentList, advisorMsg];
-        setMessages(updated);
-        localStorage.setItem(`finora_chat_history_${currentUser?.uid || 'demo'}`, JSON.stringify(updated));
-      } else {
-        setMessages(prev => [...prev, advisorMsg]);
-        await addDoc(collection(db, 'users', currentUser.uid, 'chats'), advisorMsg);
-      }
+      setMessages(prev => [...prev, advisorMsg]);
+      await databaseService.saveChatHistory(advisorMsg, currentUser?.uid || 'demo_user');
 
     } catch (err) {
       console.error("AI Advisor response generation failed:", err);
@@ -170,17 +129,7 @@ export default function AIAdvisor() {
     if (clearing) return;
     setClearing(true);
     try {
-      if (isOfflineMode || !currentUser) {
-        localStorage.removeItem(`finora_chat_history_${currentUser?.uid || 'demo'}`);
-      } else {
-        const q = query(collection(db, 'users', currentUser.uid, 'chats'));
-        const querySnapshot = await getDocs(q);
-        const deletePromises = [];
-        querySnapshot.forEach((doc) => {
-          deletePromises.push(deleteDoc(doc.ref));
-        });
-        await Promise.all(deletePromises);
-      }
+      await databaseService.clearChatHistory(currentUser?.uid || 'demo_user');
       
       const welcomeMsg = { 
         sender: 'advisor', 
@@ -189,9 +138,7 @@ export default function AIAdvisor() {
       };
       
       setMessages([welcomeMsg]);
-      if (!isOfflineMode && currentUser) {
-        await addDoc(collection(db, 'users', currentUser.uid, 'chats'), welcomeMsg);
-      }
+      await databaseService.saveChatHistory(welcomeMsg, currentUser?.uid || 'demo_user');
       showToast("Chat history cleared", "success");
     } catch (err) {
       console.error(err);

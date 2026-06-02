@@ -4,8 +4,9 @@ import Sidebar from '../components/Sidebar';
 import StatCard from '../components/StatCard';
 import Button from '../components/Button';
 import Skeleton from '../components/Skeleton';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { formatINR } from '../utils/helpers';
+import { databaseService } from '../services/databaseService';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import {
@@ -26,12 +27,7 @@ import {
 
 const COLORS = ['#59de9b', '#e9c349', '#6366f1', '#8b5cf6', '#ec4899', '#3b82f6'];
 
-const INITIAL_EXPENSES = [
-  { id: '1', description: 'Institutional Dinner Banquet', category: 'Food', amount: 8500, date: '2026-06-01' },
-  { id: '2', description: 'Venture Conference Travel', category: 'Travel', amount: 32000, date: '2026-05-28' },
-  { id: '3', description: 'Bloomberg terminal premium subscription', category: 'Bills', amount: 18500, date: '2026-05-25' },
-  { id: '4', description: 'Algorithmic Arbitrage Course', category: 'Education', amount: 15000, date: '2026-05-20' }
-];
+
 
 export default function Reports() {
   const { currentUser } = useAuth();
@@ -41,22 +37,23 @@ export default function Reports() {
   const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
-    // Strictly load data from localStorage to bypass direct Firebase connections
-    const loadLocalData = () => {
+    const fetchReportsData = async () => {
       setIsLoading(true);
       try {
-        const localExpenses = localStorage.getItem('finora_expenses');
-        const localGoals = localStorage.getItem('finora_goals');
-        
-        setExpenses(localExpenses ? JSON.parse(localExpenses) : INITIAL_EXPENSES);
-        setGoals(localGoals ? JSON.parse(localGoals) : []);
+        const uid = currentUser?.uid || 'demo_user';
+        const [expData, goalsData] = await Promise.all([
+          databaseService.getExpenses(uid),
+          databaseService.getGoals(uid)
+        ]);
+        setExpenses(expData || []);
+        setGoals(goalsData || []);
       } catch (err) {
-        console.error("Error loading local reports data:", err);
+        console.error("Error loading reports data:", err);
       } finally {
         setIsLoading(false);
       }
     };
-    loadLocalData();
+    fetchReportsData();
   }, [currentUser]);
 
   const handleDownloadPDF = async () => {

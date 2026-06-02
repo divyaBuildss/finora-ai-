@@ -4,13 +4,11 @@ import Sidebar from '../components/Sidebar';
 import StatCard from '../components/StatCard';
 import Button from '../components/Button';
 import { databaseService } from '../services/databaseService';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { formatINR } from '../utils/helpers';
-import { doc, setDoc } from 'firebase/firestore';
-import { db } from '../services/firebase';
 
 export default function BudgetPlanner() {
-  const { currentUser, isOfflineMode } = useAuth();
+  const { currentUser } = useAuth();
   
   // Data states
   const [expenses, setExpenses] = useState([]);
@@ -29,10 +27,10 @@ export default function BudgetPlanner() {
         const data = await databaseService.getExpenses(currentUser?.uid || 'demo_user');
         setExpenses(data);
         
-        // Load custom adjustments if saved
-        const savedCustom = localStorage.getItem(`finora_custom_rules_${currentUser?.uid || 'demo'}`);
+        // Load custom adjustments from databaseService
+        const savedCustom = await databaseService.fetchBudgets(currentUser?.uid || 'demo_user');
         if (savedCustom) {
-          setCustomThresholds(JSON.parse(savedCustom));
+          setCustomThresholds(savedCustom);
         }
       } catch (err) {
         console.error("Failed to load budgets dashboard", err);
@@ -91,14 +89,7 @@ export default function BudgetPlanner() {
       };
 
       setCustomThresholds(updated);
-      localStorage.setItem(`finora_custom_rules_${currentUser?.uid || 'demo'}`, JSON.stringify(updated));
-
-      if (!isOfflineMode && currentUser) {
-        // Sync limits back to firestore path 'users/{uid}'
-        await setDoc(doc(db, 'users', currentUser.uid), {
-          budgets: updated
-        }, { merge: true });
-      }
+      await databaseService.saveBudgets(updated, currentUser?.uid || 'demo_user');
 
       setAdjustRule('');
       setAdjustAmt('');

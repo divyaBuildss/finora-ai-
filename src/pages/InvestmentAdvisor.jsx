@@ -4,8 +4,9 @@ import Sidebar from '../components/Sidebar';
 import StatCard from '../components/StatCard';
 import Button from '../components/Button';
 import Skeleton from '../components/Skeleton';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../hooks/useAuth';
 import { formatINR } from '../utils/helpers';
+import { databaseService } from '../services/databaseService';
 import {
   ResponsiveContainer,
   AreaChart,
@@ -42,45 +43,34 @@ export default function InvestmentAdvisor() {
   };
 
   useEffect(() => {
-    const loadLocalData = () => {
+    const loadAdvisorData = async () => {
       setIsLoading(true);
       try {
-        const localGoals = localStorage.getItem('finora_goals');
-        const localPlans = localStorage.getItem('finora_investments');
+        const uid = currentUser?.uid || 'demo_user';
+        const [goalsData, plansData] = await Promise.all([
+          databaseService.getGoals(uid),
+          databaseService.getInvestments(uid)
+        ]);
         
-        setGoals(localGoals ? JSON.parse(localGoals) : []);
-        setSavedPlans(localPlans ? JSON.parse(localPlans) : []);
+        setGoals(goalsData || []);
+        setSavedPlans(plansData || []);
 
-        const localUser = localStorage.getItem('finora_user');
-        if (localUser) {
-          const parsed = JSON.parse(localUser);
-          const income = parsed.monthlyIncome || 150000;
-          const expenses = parsed.monthlyExpenses || 60000;
-          const savings = Math.max(0, income - expenses);
-          setMonthlyInvest(savings > 0 ? savings : 15000);
+        const incomeVal = currentUser?.monthlyIncome || 150000;
+        const expensesVal = currentUser?.monthlyExpenses || 60000;
+        const savings = Math.max(0, incomeVal - expensesVal);
+        setMonthlyInvest(savings > 0 ? savings : 15000);
 
-          const risk = parsed.riskProfile || 'balanced';
-          if (risk === 'aggressive') setExpectedRate(15);
-          else if (risk === 'conservative') setExpectedRate(8);
-          else setExpectedRate(12);
-        } else if (currentUser) {
-          const income = currentUser.monthlyIncome || 150000;
-          const expenses = currentUser.monthlyExpenses || 60000;
-          const savings = Math.max(0, income - expenses);
-          setMonthlyInvest(savings > 0 ? savings : 15000);
-
-          const risk = currentUser.riskProfile || 'balanced';
-          if (risk === 'aggressive') setExpectedRate(15);
-          else if (risk === 'conservative') setExpectedRate(8);
-          else setExpectedRate(12);
-        }
+        const risk = currentUser?.riskProfile || 'balanced';
+        if (risk === 'aggressive') setExpectedRate(15);
+        else if (risk === 'conservative') setExpectedRate(8);
+        else setExpectedRate(12);
       } catch (err) {
         console.error("Error loading investment data:", err);
       } finally {
         setIsLoading(false);
       }
     };
-    loadLocalData();
+    loadAdvisorData();
   }, [currentUser]);
 
   // Profile data
@@ -120,22 +110,23 @@ export default function InvestmentAdvisor() {
 
   const currentAllocation = getAssetAllocation();
 
-  const handleSavePlan = () => {
+  const handleSavePlan = async () => {
     setIsSaving(true);
     try {
+      const uid = currentUser?.uid || 'demo_user';
       const planToSave = {
         id: generatePlanId(),
-        userId: currentUser?.uid || 'sim-client',
+        userId: uid,
         riskProfile,
         monthlyAmount: monthlySavings,
         allocation: currentAllocation.map(a => ({ name: a.name, weight: a.weight, amount: a.allocation })),
         createdAt: new Date().toISOString()
       };
 
-      const updatedPlans = [planToSave, ...savedPlans];
+      await databaseService.saveInvestment(planToSave, uid);
+      const updatedPlans = await databaseService.getInvestments(uid);
       setSavedPlans(updatedPlans);
-      localStorage.setItem('finora_investments', JSON.stringify(updatedPlans));
-      showToast("Investment plan saved locally", "success");
+      showToast("Investment plan saved to Firestore", "success");
     } catch (err) {
       console.error(err);
       showToast("Failed to save investment plan", "error");

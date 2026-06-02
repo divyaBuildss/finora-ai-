@@ -5,26 +5,30 @@ import StatCard from '../components/StatCard';
 import Skeleton from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
 import { databaseService } from '../services/databaseService';
-import { useAuth } from '../context/AuthContext';
-import { formatINR } from '../utils/helpers';
+import { useAuth } from '../hooks/useAuth';
+import { formatINR, calculateHealthScore } from '../utils/helpers';
 import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const { currentUser } = useAuth();
   const [expenses, setExpenses] = useState([]);
   const [goals, setGoals] = useState([]);
+  const [budgets, setBudgets] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [expData, goalsData] = await Promise.all([
-          databaseService.getExpenses(),
-          databaseService.getGoals()
+        const uid = currentUser?.uid || 'demo_user';
+        const [expData, goalsData, budgetData] = await Promise.all([
+          databaseService.getExpenses(uid),
+          databaseService.getGoals(uid),
+          databaseService.fetchBudgets(uid)
         ]);
         setExpenses(expData);
         setGoals(goalsData);
+        setBudgets(budgetData);
       } catch (err) {
         console.error(err);
       } finally {
@@ -32,7 +36,7 @@ export default function Dashboard() {
       }
     };
     fetchData();
-  }, []);
+  }, [currentUser]);
 
   // Fetch dynamic variables from current client profile, falling back gracefully
   const income = currentUser?.monthlyIncome || 150000;
@@ -44,8 +48,7 @@ export default function Dashboard() {
   const totalLoggedExpenses = expensesArr.reduce((acc, curr) => acc + curr.amount, 0);
   const totalBalance = (income * 12) - totalLoggedExpenses;
   
-  // Savings Rate
-  const savingsRate = income > 0 ? (((income - profileExpenses) / income) * 100).toFixed(1) : 60.0;
+
   
 
   // Group expenses by category for pie representation
@@ -106,7 +109,7 @@ export default function Dashboard() {
               <div className="stagger-1 animate-fade-in"><StatCard title="Net Balance" value={formatINR(totalBalance)} icon="account_balance" color="emerald" /></div>
               <div className="stagger-2 animate-fade-in"><StatCard title="Monthly Income" value={formatINR(income)} icon="payments" color="emerald" /></div>
               <div className="stagger-3 animate-fade-in"><StatCard title="Total Spent" value={formatINR(totalLoggedExpenses)} change={`${expensesArr.length} transactions`} isPositive={totalLoggedExpenses < profileExpenses} icon="shopping_bag" color="gold" /></div>
-              <div className="stagger-4 animate-fade-in"><StatCard title="Savings Rate" value={`${savingsRate}%`} change="vs target" isPositive={parseFloat(savingsRate) >= 40} icon="savings" color="emerald" /></div>
+              <div className="stagger-4 animate-fade-in"><StatCard title="Financial Score" value={`${calculateHealthScore(budgets, expensesArr)}`} change="health index" isPositive={calculateHealthScore(budgets, expensesArr) >= 75} icon="insights" color="emerald" /></div>
             </div>
           )}
 
