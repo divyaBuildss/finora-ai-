@@ -48,9 +48,10 @@ export default function BudgetPlanner() {
   const baseSavingsLimit = income * 0.20;
 
   // Custom boundaries if modified
-  const needsLimit = customThresholds?.needs || baseNeedsLimit;
-  const wantsLimit = customThresholds?.wants || baseWantsLimit;
-  const savingsLimit = customThresholds?.savings || baseSavingsLimit;
+  const hasOverride = !!customThresholds?.hasCustomOverride;
+  const needsLimit = hasOverride && customThresholds?.needs !== undefined ? customThresholds.needs : baseNeedsLimit;
+  const wantsLimit = hasOverride && customThresholds?.wants !== undefined ? customThresholds.wants : baseWantsLimit;
+  const savingsLimit = hasOverride && customThresholds?.savings !== undefined ? customThresholds.savings : baseSavingsLimit;
 
   // Calculate actual spending parameters from expenses
   // Needs: Bills, Health, Education
@@ -81,11 +82,29 @@ export default function BudgetPlanner() {
     setLoading(true);
     try {
       const amtVal = parseFloat(adjustAmt) || 0;
+
+      // Prevent budget limits below current spending from being accidentally saved without warning
+      if (adjustRule === 'needs' && amtVal < needsSpent) {
+        const proceed = window.confirm(`Warning: The proposed Needs limit (₹${amtVal}) is below your current Needs spending (₹${needsSpent}). Do you want to save anyway?`);
+        if (!proceed) {
+          setLoading(false);
+          return;
+        }
+      }
+      if (adjustRule === 'wants' && amtVal < wantsSpent) {
+        const proceed = window.confirm(`Warning: The proposed Wants limit (₹${amtVal}) is below your current Wants spending (₹${wantsSpent}). Do you want to save anyway?`);
+        if (!proceed) {
+          setLoading(false);
+          return;
+        }
+      }
+
       const updated = {
-        needs: customThresholds?.needs || baseNeedsLimit,
-        wants: customThresholds?.wants || baseWantsLimit,
-        savings: customThresholds?.savings || baseSavingsLimit,
-        [adjustRule]: amtVal
+        needs: hasOverride && customThresholds?.needs !== undefined ? customThresholds.needs : baseNeedsLimit,
+        wants: hasOverride && customThresholds?.wants !== undefined ? customThresholds.wants : baseWantsLimit,
+        savings: hasOverride && customThresholds?.savings !== undefined ? customThresholds.savings : baseSavingsLimit,
+        [adjustRule]: amtVal,
+        hasCustomOverride: true
       };
 
       setCustomThresholds(updated);
@@ -100,6 +119,7 @@ export default function BudgetPlanner() {
       setLoading(false);
     }
   };
+
 
   // Compile AI Recommendations
   const getAIRecommendations = () => {
