@@ -61,7 +61,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 max-w-container-max mx-auto bg-surface-glass backdrop-blur-xl border-b border-subtle shadow-sm">
+    <header className="fixed top-0 w-full z-[100] flex justify-between items-center px-margin-mobile md:px-margin-desktop h-20 max-w-container-max mx-auto bg-surface-glass backdrop-blur-xl border-b border-subtle shadow-sm">
       <div className="flex items-center gap-2">
         {/* Mobile/Tablet Hamburger Toggle */}
         <button 
@@ -144,7 +144,7 @@ export default function Navbar() {
               
               {/* Dropdown Menu */}
               {showNotifDropdown && (
-                <div className="absolute right-0 top-full mt-3 w-80 glass-card border border-subtle rounded-2xl p-4 shadow-xl z-50 animate-fade-in text-left space-y-3">
+                <div className="absolute right-0 top-full mt-3 w-80 glass-card border border-subtle rounded-2xl p-4 shadow-xl z-[110] animate-fade-in text-left space-y-3">
                   <div className="flex justify-between items-center border-b border-subtle/50 pb-2.5">
                     <span className="text-[10px] font-bold text-on-surface uppercase tracking-wider">Alerts & Targets</span>
                     {notifications.length > 0 && (
