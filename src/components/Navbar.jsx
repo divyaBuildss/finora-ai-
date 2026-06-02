@@ -115,6 +115,15 @@ export default function Navbar() {
         >
           AI Chat
         </Link>
+        <Link 
+          to="/about" 
+          className={`font-label-md text-label-md transition-colors ${
+            isActive('/about') ? 'text-primary border-b-2 border-primary pb-1' : 'text-on-surface-variant hover:text-primary'
+          }`}
+        >
+          About
+        </Link>
+
       </nav>
 
       <div className="flex items-center gap-4">

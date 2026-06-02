@@ -17,6 +17,8 @@ import Goals from './pages/Goals';
 import Reports from './pages/Reports';
 import Profile from './pages/Profile';
 import NotFound from './pages/NotFound';
+import About from './pages/About';
+
 
 // Protected Route wrapper to secure internal panels
 function ProtectedRoute({ children }) {
@@ -39,6 +41,8 @@ export default function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/about" element={<About />} />
+
             
             {/* Protected Views */}
             <Route path="/onboarding" element={

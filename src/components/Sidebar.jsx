@@ -29,6 +29,8 @@ export default function Sidebar() {
     { to: '/goals', label: 'Wealth Goals', icon: 'track_changes' },
     { to: '/reports', label: 'Reports', icon: 'analytics' },
     { to: '/profile', label: 'Profile', icon: 'manage_accounts' },
+    { to: '/about', label: 'About Project', icon: 'info' }
+
   ];
 
   return (
