@@ -180,10 +180,11 @@ export default function Profile() {
 
   const handleGoalToggle = (goalId) => {
     setEditedData(prev => {
-      const isSelected = prev.goals.includes(goalId);
+      const currentGoals = Array.isArray(prev.goals) ? prev.goals : [];
+      const isSelected = currentGoals.includes(goalId);
       const updatedGoals = isSelected 
-        ? prev.goals.filter(g => g !== goalId) 
-        : [...prev.goals, goalId];
+        ? currentGoals.filter(g => g !== goalId) 
+        : [...currentGoals, goalId];
       return { ...prev, goals: updatedGoals };
     });
   };
@@ -407,7 +408,8 @@ export default function Profile() {
                       {isEditing ? (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
                           {GOALS_OPTIONS.map((g) => {
-                            const isSelected = editedData.goals.includes(g.id);
+                            const currentGoals = Array.isArray(editedData.goals) ? editedData.goals : [];
+                            const isSelected = currentGoals.includes(g.id);
                             return (
                               <div
                                 key={g.id}
@@ -431,7 +433,7 @@ export default function Profile() {
                         </div>
                       ) : (
                         <div className="flex flex-wrap gap-2 mt-2">
-                          {profileData.goals.length > 0 ? (
+                          {Array.isArray(profileData.goals) && profileData.goals.length > 0 ? (
                             profileData.goals.map((goalId) => {
                               const match = GOALS_OPTIONS.find(o => o.id === goalId);
                               if (!match) return null;
