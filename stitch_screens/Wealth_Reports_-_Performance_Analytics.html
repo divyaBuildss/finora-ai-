@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Finora AI - Financial Reports</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500&amp;family=Geist:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(248, 247, 243, 0.15);
+            border-left: 1px solid rgba(248, 247, 243, 0.05);
+        }
+        .ai-glow {
+            box-shadow: 0 0 40px -10px rgba(89, 222, 155, 0.2);
+        }
+        body {
+            background-color: #0b0f0d;
+            color: #e0e3df;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-secondary": "#3c2f00",
+                    "secondary-fixed-dim": "#e9c349",
+                    "surface-glass": "rgba(255, 255, 255, 0.03)",
+                    "on-background": "#e0e3df",
+                    "tertiary": "#ffb3b1",
+                    "surface-container-low": "#181c1a",
+                    "outline": "#869489",
+                    "on-secondary-fixed": "#241a00",
+                    "on-primary": "#003921",
+                    "inverse-surface": "#e0e3df",
+                    "inverse-primary": "#006d43",
+                    "surface-bright": "#363a38",
+                    "surface-container-highest": "#323633",
+                    "secondary-container": "#af8d11",
+                    "secondary": "#e9c349",
+                    "primary-fixed": "#78fbb6",
+                    "secondary-fixed": "#ffe088",
+                    "tertiary-fixed-dim": "#ffb3b1",
+                    "on-tertiary-container": "#5e0211",
+                    "primary-container": "#00a86b",
+                    "surface-container-lowest": "#0b0f0d",
+                    "on-tertiary": "#650815",
+                    "background": "#101412",
+                    "surface-dim": "#101412",
+                    "primary-fixed-dim": "#59de9b",
+                    "surface-tint": "#59de9b",
+                    "on-primary-container": "#00331d",
+                    "primary": "#59de9b",
+                    "on-error-container": "#ffdad6",
+                    "error": "#ffb4ab",
+                    "on-primary-fixed": "#002111",
+                    "border-subtle": "rgba(248, 247, 243, 0.1)",
+                    "on-error": "#690005",
+                    "surface-container": "#1c201e",
+                    "error-container": "#93000a",
+                    "on-secondary-container": "#342800",
+                    "on-surface": "#e0e3df",
+                    "on-tertiary-fixed-variant": "#852229",
+                    "ivory-white": "#F8F7F3",
+                    "outline-variant": "#3d4a41",
+                    "inverse-on-surface": "#2d312f",
+                    "tertiary-fixed": "#ffdad8",
+                    "surface-variant": "#323633",
+                    "surface-container-high": "#272b28",
+                    "tertiary-container": "#e86c6e",
+                    "on-surface-variant": "#bccabe",
+                    "on-secondary-fixed-variant": "#574500",
+                    "surface": "#101412",
+                    "on-tertiary-fixed": "#410008",
+                    "on-primary-fixed-variant": "#005232"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "container-max": "1280px",
+                    "unit": "8px",
+                    "margin-mobile": "20px",
+                    "gutter": "24px",
+                    "margin-desktop": "64px"
+            },
+            "fontFamily": {
+                    "display-lg": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "label-md": ["Geist"],
+                    "body-md": ["Inter"],
+                    "label-sm": ["Geist"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-md overflow-x-hidden">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-6 z-40 bg-surface-container-low border-r border-subtle w-64 hidden md:flex">
+<div class="mb-10 px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-secondary">Finora AI</h1>
+<p class="font-label-sm text-label-sm text-on-surface-variant opacity-70">Premium Wealth</p>
+</div>
+<nav class="flex-1 space-y-2">
+<!-- Navigation Links -->
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-label-md text-label-md">AI Advisor</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span class="font-label-md text-label-md">Expenses</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label-md text-label-md">Budget</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+<span class="font-label-md text-label-md">Investments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="track_changes">track_changes</span>
+<span class="font-label-md text-label-md">Goals</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container rounded-lg font-bold transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Reports</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-md text-label-md">Profile</span>
+</a>
+</nav>
+<div class="mt-auto space-y-2 pt-6 border-t border-subtle">
+<button class="w-full mb-4 py-3 rounded-lg bg-secondary text-on-secondary font-label-sm uppercase tracking-widest text-center hover:opacity-90 transition-opacity">Upgrade to Pro</button>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-glass transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-on-surface-variant hover:bg-surface-glass transition-all rounded-lg" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="md:ml-64 p-margin-mobile md:p-margin-desktop min-h-screen">
+<!-- Header Section -->
+<header class="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+<div>
+<h2 class="font-display-lg text-display-lg text-ivory-white mb-2">Portfolio Insights</h2>
+<p class="text-on-surface-variant font-body-lg max-w-xl">A detailed decomposition of your fiscal performance for Q3 2024. Analyzing liquidity, yield variance, and overhead ratios.</p>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 border border-ivory-white text-ivory-white font-label-sm uppercase tracking-wider rounded-none hover:bg-ivory-white hover:text-background transition-colors">Export PDF</button>
+<button class="px-6 py-3 bg-primary text-on-primary font-label-sm uppercase tracking-wider rounded-none hover:opacity-90 transition-opacity">Share Report</button>
+</div>
+</header>
+<!-- Summary Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter mb-gutter">
+<!-- Income Summary -->
+<div class="glass-card p-unit*4 flex flex-col justify-between h-48 group">
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Total Income</span>
+<span class="material-symbols-outlined text-primary" data-icon="north_east">north_east</span>
+</div>
+<div>
+<h3 class="font-headline-lg text-headline-lg text-ivory-white">$142,500.00</h3>
+<p class="text-primary font-label-sm">+12.4% vs last period</p>
+</div>
+<div class="w-full h-1 bg-surface-variant overflow-hidden">
+<div class="h-full bg-primary w-4/5 transition-all duration-1000 group-hover:w-full"></div>
+</div>
+</div>
+<!-- Expense Summary -->
+<div class="glass-card p-unit*4 flex flex-col justify-between h-48 group">
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Total Expenses</span>
+<span class="material-symbols-outlined text-error" data-icon="south_east">south_east</span>
+</div>
+<div>
+<h3 class="font-headline-lg text-headline-lg text-ivory-white">$68,240.15</h3>
+<p class="text-on-surface-variant font-label-sm">47.8% efficiency ratio</p>
+</div>
+<div class="w-full h-1 bg-surface-variant overflow-hidden">
+<div class="h-full bg-secondary w-1/2 transition-all duration-1000 group-hover:w-3/4"></div>
+</div>
+</div>
+<!-- Savings Performance -->
+<div class="glass-card p-unit*4 flex flex-col justify-between h-48 group">
+<div class="flex justify-between items-start">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">Savings Velocity</span>
+<span class="material-symbols-outlined text-secondary" data-icon="stars" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+<div>
+<h3 class="font-headline-lg text-headline-lg text-ivory-white">$74,259.85</h3>
+<p class="text-secondary font-label-sm">Premium tier achieved</p>
+</div>
+<div class="w-full h-1 bg-surface-variant overflow-hidden">
+<div class="h-full bg-secondary-container w-2/3 transition-all duration-1000 group-hover:w-4/5"></div>
+</div>
+</div>
+</section>
+<!-- Main Analytics Section -->
+<section class="grid grid-cols-1 lg:grid-cols-4 gap-gutter mb-gutter">
+<!-- Trends Visualization Card -->
+<div class="lg:col-span-3 glass-card p-8 min-h-[500px] flex flex-col">
+<div class="flex justify-between items-center mb-10">
+<div>
+<h4 class="font-headline-md text-headline-md text-ivory-white">Fiscal Growth Trends</h4>
+<p class="text-on-surface-variant font-label-md">Monthly yield vs Historical baseline</p>
+</div>
+<div class="flex gap-2">
+<span class="px-3 py-1 rounded-full border border-subtle text-label-sm text-on-surface-variant">2023</span>
+<span class="px-3 py-1 rounded-full bg-primary-container text-on-primary-container text-label-sm">2024</span>
+</div>
+</div>
+<!-- Mock Chart Visual -->
+<div class="flex-1 w-full flex items-end justify-between gap-4 px-4 pb-4">
+<!-- Column 1 -->
+<div class="flex flex-col items-center flex-1 gap-2 group cursor-pointer">
+<div class="w-full bg-surface-variant relative h-32 rounded-sm overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary opacity-20 h-3/4 transition-all group-hover:opacity-40"></div>
+<div class="absolute bottom-0 w-full bg-primary h-1/2 transition-all group-hover:h-2/3"></div>
+</div>
+<span class="text-label-sm opacity-50 uppercase">Jan</span>
+</div>
+<!-- Column 2 -->
+<div class="flex flex-col items-center flex-1 gap-2 group cursor-pointer">
+<div class="w-full bg-surface-variant relative h-48 rounded-sm overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary opacity-20 h-4/5 transition-all group-hover:opacity-40"></div>
+<div class="absolute bottom-0 w-full bg-primary h-3/5 transition-all group-hover:h-4/5"></div>
+</div>
+<span class="text-label-sm opacity-50 uppercase">Feb</span>
+</div>
+<!-- Column 3 -->
+<div class="flex flex-col items-center flex-1 gap-2 group cursor-pointer">
+<div class="w-full bg-surface-variant relative h-56 rounded-sm overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary opacity-20 h-full transition-all group-hover:opacity-40"></div>
+<div class="absolute bottom-0 w-full bg-primary h-4/5 transition-all group-hover:h-5/6"></div>
+</div>
+<span class="text-label-sm opacity-50 uppercase">Mar</span>
+</div>
+<!-- Column 4 -->
+<div class="flex flex-col items-center flex-1 gap-2 group cursor-pointer">
+<div class="w-full bg-surface-variant relative h-40 rounded-sm overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary opacity-20 h-2/3 transition-all group-hover:opacity-40"></div>
+<div class="absolute bottom-0 w-full bg-primary h-1/3 transition-all group-hover:h-1/2"></div>
+</div>
+<span class="text-label-sm opacity-50 uppercase">Apr</span>
+</div>
+<!-- Column 5 -->
+<div class="flex flex-col items-center flex-1 gap-2 group cursor-pointer">
+<div class="w-full bg-surface-variant relative h-64 rounded-sm overflow-hidden">
+<div class="absolute bottom-0 w-full bg-secondary opacity-20 h-full transition-all group-hover:opacity-40"></div>
+<div class="absolute bottom-0 w-full bg-secondary h-5/6 transition-all group-hover:h-full"></div>
+</div>
+<span class="text-label-sm text-secondary uppercase">May</span>
+</div>
+<!-- Column 6 -->
+<div class="flex flex-col items-center flex-1 gap-2 group cursor-pointer">
+<div class="w-full bg-surface-variant relative h-52 rounded-sm overflow-hidden">
+<div class="absolute bottom-0 w-full bg-primary opacity-20 h-3/4 transition-all group-hover:opacity-40"></div>
+<div class="absolute bottom-0 w-full bg-primary h-2/3 transition-all group-hover:h-3/4"></div>
+</div>
+<span class="text-label-sm opacity-50 uppercase">Jun</span>
+</div>
+</div>
+<div class="mt-8 grid grid-cols-2 gap-8 border-t border-subtle pt-8">
+<div>
+<p class="font-label-sm text-on-surface-variant uppercase mb-1">Max Monthly Yield</p>
+<p class="font-headline-md text-ivory-white">$32,490.00</p>
+</div>
+<div>
+<p class="font-label-sm text-on-surface-variant uppercase mb-1">Avg Volatility</p>
+<p class="font-headline-md text-primary">0.42%</p>
+</div>
+</div>
+</div>
+<!-- AI Advisor Side Card -->
+<div class="lg:col-span-1 glass-card p-8 ai-glow relative overflow-hidden flex flex-col justify-between">
+<div class="relative z-10">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<h5 class="font-headline-md text-headline-md text-primary">Monthly Intelligence</h5>
+</div>
+<div class="space-y-6">
+<div>
+<p class="text-secondary font-label-sm uppercase tracking-widest mb-2">Primary Insight</p>
+<p class="text-on-surface-variant italic leading-relaxed">"Your discretionary spending in 'Fine Dining' has decreased by 18%. Redirecting these funds to your 'Real Estate Fund' could accelerate your goal by 4 months."</p>
+</div>
+<div class="p-4 bg-surface-glass border-l-2 border-secondary">
+<p class="font-label-md text-ivory-white mb-1">Portfolio Rebalance Required</p>
+<p class="text-label-sm text-on-surface-variant">Tech sector weighting is 4% above target threshold.</p>
+</div>
+</div>
+</div>
+<div class="relative z-10 pt-8">
+<button class="w-full py-4 bg-primary-container text-on-primary-container font-label-md uppercase tracking-widest rounded-none hover:brightness-110 transition-all">Execute Advice</button>
+</div>
+<!-- Atmospheric background element -->
+<div class="absolute -bottom-12 -right-12 w-48 h-48 bg-primary opacity-5 rounded-full blur-3xl"></div>
+</div>
+</section>
+<!-- Detailed Breakdown -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-gutter pb-20">
+<!-- Expense Categorization -->
+<div class="glass-card p-8">
+<div class="flex justify-between items-center mb-8">
+<h4 class="font-headline-md text-headline-md text-ivory-white">Expense Decomposition</h4>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="more_horiz">more_horiz</span>
+</div>
+<div class="space-y-6">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span class="text-on-surface-variant font-label-md">Housing &amp; Utilities</span>
+</div>
+<span class="text-ivory-white font-label-md">$24,200.00</span>
+</div>
+<div class="w-full h-1 bg-surface-variant">
+<div class="bg-primary h-full w-[45%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<span class="text-on-surface-variant font-label-md">Investments &amp; Capital</span>
+</div>
+<span class="text-ivory-white font-label-md">$18,450.00</span>
+</div>
+<div class="w-full h-1 bg-surface-variant">
+<div class="bg-secondary h-full w-[35%]"></div>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-4">
+<div class="w-2 h-2 rounded-full bg-ivory-white"></div>
+<span class="text-on-surface-variant font-label-md">Luxury &amp; Lifestyle</span>
+</div>
+<span class="text-ivory-white font-label-md">$6,120.15</span>
+</div>
+<div class="w-full h-1 bg-surface-variant">
+<div class="bg-ivory-white h-full w-[12%]"></div>
+</div>
+</div>
+</div>
+<!-- Savings Goals Progress -->
+<div class="glass-card p-8">
+<div class="flex justify-between items-center mb-8">
+<h4 class="font-headline-md text-headline-md text-ivory-white">Wealth Trajectory</h4>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="filter_list">filter_list</span>
+</div>
+<div class="flex items-center justify-center h-48 relative">
+<!-- Donut Mock -->
+<div class="w-40 h-40 rounded-full border-[12px] border-surface-variant relative flex items-center justify-center">
+<div class="absolute top-0 left-0 w-full h-full border-[12px] border-secondary border-t-transparent border-r-transparent rounded-full rotate-45"></div>
+<div class="text-center">
+<span class="block font-headline-md text-ivory-white">74%</span>
+<span class="block text-[10px] text-on-surface-variant uppercase tracking-widest">To Goal</span>
+</div>
+</div>
+</div>
+<div class="mt-8 flex justify-around text-center">
+<div>
+<p class="text-label-sm text-on-surface-variant uppercase mb-1">Target</p>
+<p class="font-label-md text-ivory-white">$1.2M</p>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant uppercase mb-1">Current</p>
+<p class="font-label-md text-secondary">$892K</p>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant uppercase mb-1">ETA</p>
+<p class="font-label-md text-ivory-white">May 2026</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-margin-desktop px-margin-desktop flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto border-t border-subtle bg-background">
+<div class="mb-8 md:mb-0">
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Finora AI</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">© 2024 Finora AI. All rights reserved.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors uppercase tracking-widest" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors uppercase tracking-widest" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors uppercase tracking-widest" href="#">Security</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors uppercase tracking-widest" href="#">Contact</a>
+</div>
+</footer>
+<!-- Mobile Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full bg-surface-container-low border-t border-subtle flex md:hidden justify-around items-center py-3 px-4 z-50">
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] uppercase font-bold">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="text-[10px] uppercase font-bold">Advisor</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="analytics" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span class="text-[10px] uppercase font-bold">Reports</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px] uppercase font-bold">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interaction for hover states on bars
+        document.querySelectorAll('.group.cursor-pointer').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                // Potential for adding tooltips or dynamic data display here
+            });
+        });
+
+        // Initialize atmospheric glows
+        window.addEventListener('scroll', () => {
+            const opacity = Math.min(0.1, window.scrollY / 1000);
+            document.body.style.backgroundImage = `radial-gradient(circle at 50% 50%, rgba(89, 222, 155, ${opacity}), transparent)`;
+        });
+    </script>
+</body></html>

@@ -1,0 +1,400 @@
+@import "tailwindcss";
+
+:root {
+  --base-charcoal: #0B0F0D;
+  --emerald: #59de9b;
+  --gold: #e9c349;
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(248, 247, 243, 0.08);
+  --glass-border-hover: rgba(248, 247, 243, 0.18);
+  --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-spring: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Base ────────────────────────────────────────────────── */
+body {
+  background-color: var(--base-charcoal);
+  color: #e0e3df;
+  overflow-x: hidden;
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Glass Cards ─────────────────────────────────────────── */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+.glass-card.absolute {
+  position: absolute;
+}
+
+.glass-card.fixed {
+  position: fixed;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glass-card:hover {
+  border-color: var(--glass-border-hover);
+  box-shadow: 
+    0 0 0 1px rgba(89, 222, 155, 0.04),
+    0 20px 60px -10px rgba(0, 0, 0, 0.5),
+    0 4px 20px -4px rgba(89, 222, 155, 0.06);
+  transform: translateY(-1px);
+}
+
+.glass-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Glow Effects ────────────────────────────────────────── */
+.emerald-glow {
+  text-shadow: 0 0 24px rgba(89, 222, 155, 0.4), 0 0 48px rgba(89, 222, 155, 0.15);
+}
+
+.gold-glow {
+  text-shadow: 0 0 24px rgba(233, 195, 73, 0.4), 0 0 48px rgba(233, 195, 73, 0.15);
+}
+
+.emerald-ring {
+  box-shadow: 0 0 0 1px rgba(89, 222, 155, 0.3), 0 0 20px rgba(89, 222, 155, 0.1);
+}
+
+/* ── Hero / Page Backgrounds ─────────────────────────────── */
+.hero-gradient {
+  background: radial-gradient(ellipse at 50% 0%, rgba(0, 168, 107, 0.06) 0%, transparent 60%);
+}
+
+.page-gradient {
+  background: 
+    radial-gradient(ellipse at 80% 0%, rgba(89, 222, 155, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 20% 100%, rgba(233, 195, 73, 0.02) 0%, transparent 50%);
+}
+
+/* ── Stat Cards (premium fintech look) ───────────────────── */
+.stat-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  transition: var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(89, 222, 155, 0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.stat-card:hover::after {
+  opacity: 1;
+}
+
+.stat-card:hover {
+  border-color: rgba(89, 222, 155, 0.15);
+  box-shadow: 
+    0 8px 32px -8px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(89, 222, 155, 0.05);
+  transform: translateY(-2px);
+}
+
+.stat-card-gold::after {
+  background: linear-gradient(90deg, transparent, rgba(233, 195, 73, 0.4), transparent);
+}
+
+.stat-card-gold:hover {
+  border-color: rgba(233, 195, 73, 0.15);
+  box-shadow: 
+    0 8px 32px -8px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(233, 195, 73, 0.05);
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ripple effect */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ripple::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+
+.btn-ripple:active::after {
+  width: 300px;
+  height: 300px;
+  opacity: 0;
+}
+
+/* ── Input Fields ────────────────────────────────────────── */
+input, select, textarea {
+  transition: var(--transition-smooth);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(89, 222, 155, 0.15), 0 0 20px rgba(89, 222, 155, 0.05);
+}
+
+input::placeholder {
+  color: rgba(188, 202, 190, 0.35);
+}
+
+/* ── Sidebar ─────────────────────────────────────────────── */
+.sidebar-link {
+  position: relative;
+  transition: var(--transition-smooth);
+}
+
+.sidebar-link::before {
+  content: '';
+  position: absolute;
+  left: -24px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--emerald), transparent);
+  border-radius: 0 2px 2px 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar-link.active::before {
+  opacity: 1;
+}
+
+/* ── Progress Bars ───────────────────────────────────────── */
+.progress-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  animation: shimmer-progress 2s infinite;
+}
+
+@keyframes shimmer-progress {
+  0%   { left: -60%; }
+  100% { left: 150%; }
+}
+
+/* ── Skeleton Loading ────────────────────────────────────── */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.05) 60%,
+    transparent 100%
+  );
+  animation: skeleton-wave 1.8s ease-in-out infinite;
+}
+
+@keyframes skeleton-wave {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ── Number Ticker Animation ─────────────────────────────── */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.value-ticker {
+  animation: count-up 0.6s ease-out forwards;
+}
+
+/* ── Card Entry Stagger ──────────────────────────────────── */
+.stagger-1 { animation-delay: 0ms; }
+.stagger-2 { animation-delay: 80ms; }
+.stagger-3 { animation-delay: 160ms; }
+.stagger-4 { animation-delay: 240ms; }
+
+/* ── Insight Cards ───────────────────────────────────────── */
+.insight-card {
+  transition: var(--transition-smooth);
+  cursor: default;
+}
+
+.insight-card:hover {
+  background: rgba(89, 222, 155, 0.04);
+  border-color: rgba(89, 222, 155, 0.15);
+}
+
+/* ── Nav Active Indicator ────────────────────────────────── */
+.nav-active-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--emerald);
+  box-shadow: 0 0 6px var(--emerald);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { 
+  background: rgba(255,255,255,0.08); 
+  border-radius: 10px; 
+  transition: background 0.2s ease;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(89, 222, 155, 0.25); }
+
+/* ── Focus ring (accessibility + premium) ────────────────── */
+button:focus-visible, a:focus-visible {
+  outline: 2px solid rgba(89, 222, 155, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Table rows ──────────────────────────────────────────── */
+.table-row-hover {
+  transition: background 0.15s ease;
+}
+
+.table-row-hover:hover {
+  background: rgba(89, 222, 155, 0.03);
+}
+
+/* ── Tooltip-like badge ──────────────────────────────────── */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 100px;
+}
+
+.status-badge.success {
+  background: rgba(89, 222, 155, 0.1);
+  color: #59de9b;
+  border: 1px solid rgba(89, 222, 155, 0.2);
+}
+
+.status-badge.warning {
+  background: rgba(233, 195, 73, 0.1);
+  color: #e9c349;
+  border: 1px solid rgba(233, 195, 73, 0.2);
+}
+
+.status-badge.danger {
+  background: rgba(255, 80, 80, 0.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 80, 80, 0.2);
+}
+
+/* ── Live indicator ──────────────────────────────────────── */
+.live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--emerald);
+  box-shadow: 0 0 0 0 rgba(89,222,155,0.4);
+  animation: live-pulse 2s ease-out infinite;
+}
+
+@keyframes live-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(89,222,155,0.5); }
+  70%  { box-shadow: 0 0 0 8px rgba(89,222,155,0); }
+  100% { box-shadow: 0 0 0 0 rgba(89,222,155,0); }
+}
+
+/* ── Overflow helpers ────────────────────────────────────── */
+.overflow-x-auto {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.08) transparent;
+}
+
+/* ── Divider gradient ────────────────────────────────────── */
+.divider-gradient {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(248,247,243,0.1) 50%, transparent);
+}

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Finora AI | SIP Calculator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500&amp;family=Geist:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background-color: #0b0f0d;
+            color: #e0e3df;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(248, 247, 243, 0.1);
+        }
+        .premium-border {
+            border-top: 1px solid rgba(248, 247, 243, 0.2);
+        }
+        .glow-emerald {
+            box-shadow: 0 0 40px -10px rgba(89, 222, 155, 0.4);
+        }
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 2px;
+            cursor: pointer;
+            background: #3d4a41;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #59de9b;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin-top: -7px;
+            box-shadow: 0 0 10px rgba(89, 222, 155, 0.5);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#3c2f00",
+                        "secondary-fixed-dim": "#e9c349",
+                        "surface-glass": "rgba(255, 255, 255, 0.03)",
+                        "on-background": "#e0e3df",
+                        "tertiary": "#ffb3b1",
+                        "surface-container-low": "#181c1a",
+                        "outline": "#869489",
+                        "on-secondary-fixed": "#241a00",
+                        "on-primary": "#003921",
+                        "inverse-surface": "#e0e3df",
+                        "inverse-primary": "#006d43",
+                        "surface-bright": "#363a38",
+                        "surface-container-highest": "#323633",
+                        "secondary-container": "#af8d11",
+                        "secondary": "#e9c349",
+                        "primary-fixed": "#78fbb6",
+                        "secondary-fixed": "#ffe088",
+                        "tertiary-fixed-dim": "#ffb3b1",
+                        "on-tertiary-container": "#5e0211",
+                        "primary-container": "#00a86b",
+                        "surface-container-lowest": "#0b0f0d",
+                        "on-tertiary": "#650815",
+                        "background": "#101412",
+                        "surface-dim": "#101412",
+                        "primary-fixed-dim": "#59de9b",
+                        "surface-tint": "#59de9b",
+                        "on-primary-container": "#00331d",
+                        "primary": "#59de9b",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed": "#002111",
+                        "border-subtle": "rgba(248, 247, 243, 0.1)",
+                        "on-error": "#690005",
+                        "surface-container": "#1c201e",
+                        "error-container": "#93000a",
+                        "on-secondary-container": "#342800",
+                        "on-surface": "#e0e3df",
+                        "on-tertiary-fixed-variant": "#852229",
+                        "ivory-white": "#F8F7F3",
+                        "outline-variant": "#3d4a41",
+                        "inverse-on-surface": "#2d312f",
+                        "tertiary-fixed": "#ffdad8",
+                        "surface-variant": "#323633",
+                        "surface-container-high": "#272b28",
+                        "tertiary-container": "#e86c6e",
+                        "on-surface-variant": "#bccabe",
+                        "on-secondary-fixed-variant": "#574500",
+                        "surface": "#101412",
+                        "on-tertiary-fixed": "#410008",
+                        "on-primary-fixed-variant": "#005232"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "label-md": ["Geist"],
+                        "label-sm": ["Geist"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-surface-container-lowest text-on-surface selection:bg-primary selection:text-on-primary">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-surface-glass backdrop-blur-xl border-b border-subtle h-20 flex justify-between items-center px-margin-desktop max-w-container-max mx-auto left-1/2 -translate-x-1/2">
+<div class="font-display-lg text-display-lg font-bold text-primary">Finora AI</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-label-md text-label-md text-primary border-b-2 border-primary pb-1" href="#">Features</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Investments</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Security</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">About</a>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-2 font-label-sm text-label-sm uppercase tracking-wider text-on-surface border border-ivory-white hover:bg-ivory-white hover:text-background transition-all active:scale-95">View Demo</button>
+<button class="px-6 py-2 font-label-sm text-label-sm uppercase tracking-wider bg-primary-container text-on-primary-container font-bold hover:brightness-110 transition-all glow-emerald active:scale-95">Get Started</button>
+</div>
+</nav>
+<!-- Main Content -->
+<main class="pt-32 pb-margin-desktop px-margin-desktop max-w-container-max mx-auto min-h-screen">
+<header class="mb-16 text-center">
+<h1 class="font-display-lg text-display-lg mb-4">SIP Wealth Engine</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                Calculate the trajectory of your financial future using our high-precision AI-driven projection engine.
+            </p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left: Inputs -->
+<aside class="lg:col-span-4 space-y-gutter">
+<div class="glass-panel premium-border p-8 rounded-xl space-y-10">
+<h3 class="font-headline-md text-headline-md text-primary">Parameters</h3>
+<!-- Monthly Investment -->
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">Monthly Investment</label>
+<span class="font-headline-md text-headline-md text-ivory-white">₹<span id="monthly-value">25,000</span></span>
+</div>
+<input class="focus:outline-none" id="input-monthly" max="500000" min="1000" step="1000" type="range" value="25000"/>
+</div>
+<!-- Investment Duration -->
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">Duration (Years)</label>
+<span class="font-headline-md text-headline-md text-ivory-white"><span id="duration-value">10</span> Years</span>
+</div>
+<input class="focus:outline-none" id="input-duration" max="40" min="1" step="1" type="range" value="10"/>
+</div>
+<!-- Expected Return -->
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<label class="font-label-md text-label-md uppercase tracking-widest text-on-surface-variant">Expected Return (%)</label>
+<span class="font-headline-md text-headline-md text-primary"><span id="return-value">12</span>%</span>
+</div>
+<input class="focus:outline-none" id="input-return" max="30" min="1" step="0.5" type="range" value="12"/>
+</div>
+<button class="w-full py-4 mt-4 font-label-md text-label-md uppercase tracking-widest border border-primary text-primary hover:bg-primary hover:text-on-primary transition-all rounded-lg">
+                        Optimize Strategy
+                    </button>
+</div>
+<!-- Small AI Insight Card -->
+<div class="glass-panel premium-border p-6 rounded-xl flex items-start gap-4 border-l-4 border-l-secondary">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">psychology</span>
+<div>
+<h4 class="font-label-md text-label-md text-secondary uppercase mb-1">AI Recommendation</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Increasing your SIP by 10% annually could double your wealth in <span class="text-secondary font-bold">14 years</span> instead of 20.</p>
+</div>
+</div>
+</aside>
+<!-- Right: Results & Viz -->
+<section class="lg:col-span-8 space-y-gutter">
+<!-- Top Row: Metric Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="glass-panel premium-border p-8 rounded-xl">
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant mb-2">Total Investment</p>
+<h2 class="font-headline-lg text-headline-lg text-ivory-white">₹<span id="total-invested">30.0L</span></h2>
+</div>
+<div class="glass-panel premium-border p-8 rounded-xl">
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant mb-2">Est. Returns</p>
+<h2 class="font-headline-lg text-headline-lg text-primary">₹<span id="estimated-returns">28.1L</span></h2>
+</div>
+<div class="glass-panel premium-border p-8 rounded-xl bg-gradient-to-br from-secondary/10 to-transparent relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2">
+<span class="material-symbols-outlined text-secondary/30 scale-150 group-hover:text-secondary/60 transition-colors">diamond</span>
+</div>
+<p class="font-label-sm text-label-sm uppercase tracking-widest text-secondary mb-2">Future Value</p>
+<h2 class="font-headline-lg text-headline-lg text-secondary">₹<span id="future-value">58.1L</span></h2>
+</div>
+</div>
+<!-- Main Visualization Card -->
+<div class="glass-panel premium-border p-8 rounded-xl h-[500px] flex flex-col relative overflow-hidden">
+<div class="flex justify-between items-center mb-8 relative z-10">
+<div>
+<h3 class="font-headline-md text-headline-md text-ivory-white">Growth Projection</h3>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Mathematical compounding model</p>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-secondary rounded-full"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Wealth</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-3 h-3 bg-primary rounded-full"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Principal</span>
+</div>
+</div>
+</div>
+<!-- Mock Visualization (SVG) -->
+<div class="flex-grow relative mt-4">
+<svg class="w-full h-full preserve-3d" viewbox="0 0 800 300">
+<!-- Grid Lines -->
+<line stroke="#3d4a41" stroke-width="1" x1="0" x2="800" y1="280" y2="280"></line>
+<line stroke="#3d4a41" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="800" y1="200" y2="200"></line>
+<line stroke="#3d4a41" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="800" y1="120" y2="120"></line>
+<line stroke="#3d4a41" stroke-dasharray="4" stroke-width="0.5" x1="0" x2="800" y1="40" y2="40"></line>
+<!-- Principal Path -->
+<path d="M0,280 L800,180" fill="none" id="principal-path" stroke="#59de9b" stroke-width="2"></path>
+<!-- Wealth Accumulation Path (Compounding Curve) -->
+<path d="M0,280 Q400,260 800,20" fill="none" id="wealth-path" stroke="#e9c349" stroke-width="3"></path>
+<!-- Area Fills -->
+<path d="M0,280 Q400,260 800,20 L800,280 Z" fill="url(#grad-wealth)" id="wealth-area" opacity="0.1"></path>
+<defs>
+<lineargradient id="grad-wealth" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#e9c349;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#e9c349;stop-opacity:0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<div class="flex justify-between px-2 pt-4 font-label-sm text-label-sm text-on-surface-variant">
+<span>Year 0</span>
+<span>Year 5</span>
+<span>Year 10</span>
+<span>Year 15</span>
+<span>Year 20</span>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-background border-t border-subtle w-full py-margin-desktop px-margin-desktop max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center mt-20">
+<div class="mb-6 md:mb-0">
+<span class="font-headline-md text-headline-md text-primary font-bold">Finora AI</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant mt-2">© 2024 Finora AI. All rights reserved.</p>
+</div>
+<div class="flex gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors uppercase tracking-widest" href="#">Privacy Policy</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors uppercase tracking-widest" href="#">Terms of Service</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors uppercase tracking-widest" href="#">Security</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-secondary transition-colors uppercase tracking-widest" href="#">Contact</a>
+</div>
+</footer>
+<script>
+        const monthlyInput = document.getElementById('input-monthly');
+        const durationInput = document.getElementById('input-duration');
+        const returnInput = document.getElementById('input-return');
+
+        const monthlyValText = document.getElementById('monthly-value');
+        const durationValText = document.getElementById('duration-value');
+        const returnValText = document.getElementById('return-value');
+
+        const totalInvestedText = document.getElementById('total-invested');
+        const estimatedReturnsText = document.getElementById('estimated-returns');
+        const futureValueText = document.getElementById('future-value');
+
+        const wealthPath = document.getElementById('wealth-path');
+        const principalPath = document.getElementById('principal-path');
+        const wealthArea = document.getElementById('wealth-area');
+
+        function formatCurrency(num) {
+            if (num >= 10000000) return (num / 10000000).toFixed(2) + 'Cr';
+            if (num >= 100000) return (num / 100000).toFixed(1) + 'L';
+            return num.toLocaleString('en-IN');
+        }
+
+        function calculateSIP() {
+            const P = parseFloat(monthlyInput.value);
+            const n = parseFloat(durationInput.value) * 12;
+            const r = (parseFloat(returnInput.value) / 100) / 12;
+
+            // FV = P × [((1 + r)^n - 1) / r] × (1 + r)
+            const futureValue = P * (((Math.pow(1 + r, n) - 1) / r) * (1 + r));
+            const totalInvested = P * n;
+            const estimatedReturns = futureValue - totalInvested;
+
+            // Update UI
+            monthlyValText.innerText = P.toLocaleString('en-IN');
+            durationValText.innerText = durationInput.value;
+            returnValText.innerText = returnInput.value;
+
+            totalInvestedText.innerText = formatCurrency(totalInvested);
+            estimatedReturnsText.innerText = formatCurrency(estimatedReturns);
+            futureValueText.innerText = formatCurrency(futureValue);
+
+            // Update SVG Graph Logic (Simplified Animation)
+            updateGraph(n, totalInvested, futureValue);
+        }
+
+        function updateGraph(months, principal, wealth) {
+            // Adjusting paths based on total wealth relative to principal
+            const ratio = principal / wealth;
+            const yPrincipal = 280 - (260 * ratio);
+            
+            // Principal line
+            principalPath.setAttribute('d', `M0,280 L800,${yPrincipal}`);
+            
+            // Wealth curve
+            // We use a quadratic bezier to simulate compounding acceleration
+            const curveControlY = 280 - (260 * ratio * 0.5);
+            const dStr = `M0,280 Q400,${curveControlY} 800,20`;
+            wealthPath.setAttribute('d', dStr);
+            wealthArea.setAttribute('d', dStr + " L800,280 Z");
+        }
+
+        [monthlyInput, durationInput, returnInput].forEach(input => {
+            input.addEventListener('input', calculateSIP);
+        });
+
+        // Init
+        calculateSIP();
+    </script>
+</body></html>

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Finora AI | AI Wealth Advisor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;family=Inter:wght@400;500&amp;family=Geist:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Hanken+Grotesk:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(248, 247, 243, 0.1);
+        }
+        .ai-glow {
+            box-shadow: 0 0 40px -10px rgba(89, 222, 155, 0.2);
+        }
+        .typing-dot {
+            animation: typing 1.4s infinite;
+        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-4px); opacity: 1; }
+        }
+        .gradient-border-top {
+            border-top: 1px solid;
+            border-image: linear-gradient(to right, rgba(248, 247, 243, 0.2), transparent) 1;
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(89, 222, 155, 0.1); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(89, 222, 155, 0.2); }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary": "#3c2f00",
+                        "secondary-fixed-dim": "#e9c349",
+                        "surface-glass": "rgba(255, 255, 255, 0.03)",
+                        "on-background": "#e0e3df",
+                        "tertiary": "#ffb3b1",
+                        "surface-container-low": "#181c1a",
+                        "outline": "#869489",
+                        "on-secondary-fixed": "#241a00",
+                        "on-primary": "#003921",
+                        "inverse-surface": "#e0e3df",
+                        "inverse-primary": "#006d43",
+                        "surface-bright": "#363a38",
+                        "surface-container-highest": "#323633",
+                        "secondary-container": "#af8d11",
+                        "secondary": "#e9c349",
+                        "primary-fixed": "#78fbb6",
+                        "secondary-fixed": "#ffe088",
+                        "tertiary-fixed-dim": "#ffb3b1",
+                        "on-tertiary-container": "#5e0211",
+                        "primary-container": "#00a86b",
+                        "surface-container-lowest": "#0b0f0d",
+                        "on-tertiary": "#650815",
+                        "background": "#101412",
+                        "surface-dim": "#101412",
+                        "primary-fixed-dim": "#59de9b",
+                        "surface-tint": "#59de9b",
+                        "on-primary-container": "#00331d",
+                        "primary": "#59de9b",
+                        "on-error-container": "#ffdad6",
+                        "error": "#ffb4ab",
+                        "on-error": "#690005",
+                        "surface-container": "#1c201e",
+                        "error-container": "#93000a",
+                        "on-secondary-container": "#342800",
+                        "on-surface": "#e0e3df",
+                        "on-tertiary-fixed-variant": "#852229",
+                        "ivory-white": "#F8F7F3",
+                        "outline-variant": "#3d4a41",
+                        "inverse-on-surface": "#2d312f",
+                        "tertiary-fixed": "#ffdad8",
+                        "surface-variant": "#323633",
+                        "surface-container-high": "#272b28",
+                        "tertiary-container": "#e86c6e",
+                        "on-surface-variant": "#bccabe",
+                        "on-secondary-fixed-variant": "#574500",
+                        "surface": "#101412",
+                        "on-tertiary-fixed": "#410008",
+                        "on-primary-fixed-variant": "#005232",
+                        "border-subtle": "rgba(248, 247, 243, 0.1)"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "unit": "8px",
+                        "margin-mobile": "20px",
+                        "gutter": "24px",
+                        "margin-desktop": "64px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "label-md": ["Geist"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "500"}],
+                        "label-md": ["14px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- Sidebar Navigation Shell -->
+<aside class="fixed left-0 top-0 h-full flex flex-col p-6 z-40 bg-surface-container-low border-r border-subtle w-64 transition-all duration-200 ease-in-out">
+<div class="mb-10">
+<span class="font-headline-md text-headline-md font-bold text-secondary">Finora AI</span>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-widest mt-1">Premium Wealth</p>
+</div>
+<nav class="flex-grow space-y-2">
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="flex items-center gap-3 p-3 bg-primary-container text-on-primary-container rounded-lg font-bold">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-label-md text-label-md">AI Advisor</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">payments</span>
+<span class="font-label-md text-label-md">Expenses</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="font-label-md text-label-md">Budget</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">trending_up</span>
+<span class="font-label-md text-label-md">Investments</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">track_changes</span>
+<span class="font-label-md text-label-md">Goals</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-glass hover:text-primary transition-all rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">analytics</span>
+<span class="font-label-md text-label-md">Reports</span>
+</div>
+</nav>
+<div class="mt-auto space-y-4">
+<div class="glass-card p-4 rounded-xl text-center border-secondary/20">
+<span class="text-secondary font-label-sm block mb-2">Upgrade to Pro</span>
+<button class="bg-primary text-on-primary text-[10px] font-bold py-2 px-4 rounded-full uppercase tracking-tighter w-full active:scale-95 transition-transform">Get Access</button>
+</div>
+<div class="pt-4 border-t border-subtle">
+<div class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-glass rounded-lg cursor-pointer transition-all">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Settings</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 h-screen flex flex-col bg-surface-container-lowest relative overflow-hidden">
+<!-- Header -->
+<header class="h-20 flex items-center justify-between px-10 border-b border-subtle bg-surface-dim/80 backdrop-blur-md sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center ai-glow">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<div>
+<h1 class="font-headline-md text-headline-md text-on-surface">AI Wealth Advisor</h1>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="text-[10px] text-primary uppercase font-bold tracking-widest">Active Intelligence</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 border border-subtle px-4 py-2 rounded-full hover:bg-surface-glass transition-all">
+<span class="material-symbols-outlined text-sm">history</span>
+<span class="font-label-sm text-label-sm">Session History</span>
+</button>
+</div>
+</header>
+<!-- Chat Container -->
+<div class="flex-grow overflow-y-auto px-10 py-10 space-y-8 max-w-4xl mx-auto w-full" id="chat-viewport">
+<!-- AI Welcome Message -->
+<div class="flex gap-4 group">
+<div class="w-8 h-8 rounded-lg bg-secondary/10 border border-secondary/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="space-y-4 max-w-[85%]">
+<div class="text-on-surface-variant font-body-md leading-relaxed">
+                        Good evening, I've analyzed your current portfolios and cash flow. How can I assist you with your wealth strategy today?
+                    </div>
+<!-- Quick Actions -->
+<div class="flex flex-wrap gap-3">
+<button class="px-4 py-2 rounded-lg border border-subtle hover:border-primary/50 bg-surface-glass text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-all duration-300" onclick="sendQuery(this.innerText)">How can I save ₹10000 monthly?</button>
+<button class="px-4 py-2 rounded-lg border border-subtle hover:border-primary/50 bg-surface-glass text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-all duration-300" onclick="sendQuery(this.innerText)">Can I afford a new laptop?</button>
+<button class="px-4 py-2 rounded-lg border border-subtle hover:border-primary/50 bg-surface-glass text-label-sm font-label-sm text-on-surface-variant hover:text-primary transition-all duration-300" onclick="sendQuery(this.innerText)">Where should I invest ₹5000?</button>
+</div>
+</div>
+</div>
+<!-- Example AI Response Card (Analysis, Recommendation, Action Plan) -->
+<div class="flex gap-4">
+<div class="w-8 h-8 rounded-lg bg-secondary/10 border border-secondary/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="glass-card rounded-2xl overflow-hidden max-w-[90%] border-primary/20 ai-glow">
+<div class="p-6 space-y-6">
+<!-- Analysis -->
+<section>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-primary text-lg">analytics</span>
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-primary">Financial Analysis</h3>
+</div>
+<p class="text-on-surface-variant text-body-md">Based on your spending patterns, you have a monthly surplus of ₹18,500. However, your discretionary spending on "Luxury Dining" increased by 22% last month.</p>
+</section>
+<!-- Recommendation -->
+<section class="p-4 rounded-xl bg-primary/5 border border-primary/10">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-secondary text-lg">stars</span>
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-secondary">Strategic Recommendation</h3>
+</div>
+<p class="text-ivory-white font-medium">Redirect ₹10,000 from your dining budget into a high-yield Recurring Deposit or Index Fund. This would potentially yield ₹1.4L in 12 months at current market rates.</p>
+</section>
+<!-- Action Plan -->
+<section>
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-on-surface text-lg">checklist</span>
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface">Action Plan</h3>
+</div>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="w-5 h-5 rounded-full border border-primary flex items-center justify-center shrink-0 mt-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</span>
+<span class="text-on-surface-variant text-sm">Set up auto-transfer of ₹10,000 for the 1st of every month.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="w-5 h-5 rounded-full border border-subtle flex items-center justify-center shrink-0 mt-1"></span>
+<span class="text-on-surface-variant text-sm">Review "Dining" category limits in your monthly budget.</span>
+</li>
+</ul>
+</section>
+</div>
+<div class="px-6 py-4 bg-surface-glass border-t border-subtle flex justify-between items-center">
+<span class="text-[10px] text-on-surface-variant uppercase font-bold">Execution Probability: 94%</span>
+<button class="text-primary font-label-sm text-label-sm uppercase tracking-tighter flex items-center gap-2 hover:opacity-80">
+                            Execute Plan <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Typing Indicator -->
+<div class="hidden flex gap-4" id="typing-indicator">
+<div class="w-8 h-8 rounded-lg bg-secondary/10 border border-secondary/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings: 'FILL' 1;">bolt</span>
+</div>
+<div class="glass-card px-4 py-3 rounded-2xl flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-primary rounded-full typing-dot"></span>
+<span class="w-1.5 h-1.5 bg-primary rounded-full typing-dot"></span>
+<span class="w-1.5 h-1.5 bg-primary rounded-full typing-dot"></span>
+</div>
+</div>
+</div>
+<!-- Input Section -->
+<footer class="p-10 bg-gradient-to-t from-background to-transparent pt-20">
+<div class="max-w-4xl mx-auto relative">
+<div class="glass-card rounded-2xl p-2 flex items-center gap-4 group focus-within:ring-1 focus-within:ring-primary/30 transition-all duration-300">
+<button class="w-12 h-12 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">attach_file</span>
+</button>
+<input class="flex-grow bg-transparent border-none focus:ring-0 text-body-md text-ivory-white placeholder:text-on-surface-variant/50 py-4" id="chat-input" placeholder="Ask Finora about your wealth strategy..." type="text"/>
+<button class="w-12 h-12 rounded-xl bg-primary text-on-primary flex items-center justify-center active:scale-90 transition-transform shadow-lg shadow-primary/20" id="send-btn">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">send</span>
+</button>
+</div>
+<p class="text-center text-[10px] text-on-surface-variant/40 mt-4 uppercase tracking-widest">Finora AI can make mistakes. Check important financial info.</p>
+</div>
+</footer>
+</main>
+<script>
+        const input = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        const viewport = document.getElementById('chat-viewport');
+        const typingIndicator = document.getElementById('typing-indicator');
+
+        function appendMessage(text, isUser = true) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = isUser ? 'flex justify-end' : 'flex gap-4';
+            
+            if (isUser) {
+                msgDiv.innerHTML = `
+                    <div class="glass-card px-6 py-4 rounded-2xl max-w-[70%] border-primary/10">
+                        <p class="text-on-surface font-body-md">${text}</p>
+                    </div>
+                `;
+            } else {
+                msgDiv.innerHTML = `
+                    <div class="w-8 h-8 rounded-lg bg-secondary/10 border border-secondary/20 flex items-center justify-center shrink-0">
+                        <span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                    </div>
+                    <div class="space-y-4 max-w-[85%]">
+                        <div class="text-on-surface-variant font-body-md leading-relaxed">
+                            ${text}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            viewport.insertBefore(msgDiv, typingIndicator);
+            viewport.scrollTop = viewport.scrollHeight;
+        }
+
+        function sendQuery(text) {
+            if (!text) return;
+            appendMessage(text, true);
+            input.value = '';
+            
+            // Show typing indicator
+            typingIndicator.classList.remove('hidden');
+            viewport.scrollTop = viewport.scrollHeight;
+
+            // Fake response delay
+            setTimeout(() => {
+                typingIndicator.classList.add('hidden');
+                appendMessage("I've analyzed your query regarding wealth optimization. For a detailed action plan, would you like me to look into your historic investment returns or current debt obligations?", false);
+            }, 2000);
+        }
+
+        sendBtn.addEventListener('click', () => sendQuery(input.value));
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendQuery(input.value);
+        });
+    </script>
+</body></html>
