@@ -9,6 +9,7 @@ import { formatINR } from '../utils/helpers';
 import { databaseService } from '../services/databaseService';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { exportToCSV } from '../utils/exportUtils';
 import {
   ResponsiveContainer,
   PieChart,
@@ -84,6 +85,52 @@ export default function Reports() {
     } finally {
       setIsDownloading(false);
     }
+  };
+
+  const handleExportCSV = () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    const filename = `finora-report-${yyyy}-${mm}-${dd}.csv`;
+
+    let csvData = 'EXPENSES\n';
+    csvData += 'Date,Category,Description,Amount\n';
+    if (expenses.length === 0) {
+      csvData += 'No expenses recorded,,,\n';
+    } else {
+      expenses.forEach(e => {
+        const date = e.date || '';
+        const category = e.category || '';
+        const description = e.description || '';
+        const amount = e.amount || 0;
+        
+        const escapedDate = String(date).replace(/"/g, '""');
+        const escapedCategory = String(category).replace(/"/g, '""');
+        const escapedDescription = String(description).replace(/"/g, '""');
+        
+        csvData += `"${escapedDate}","${escapedCategory}","${escapedDescription}","${amount}"\n`;
+      });
+    }
+
+    csvData += '\nGOALS\n';
+    csvData += 'Goal Name,Target Amount,Current Amount,Progress\n';
+    if (goals.length === 0) {
+      csvData += 'No goals recorded,,,\n';
+    } else {
+      goals.forEach(g => {
+        const name = g.name || '';
+        const target = g.target || 0;
+        const current = g.current || 0;
+        const progress = target > 0 ? `${((current / target) * 100).toFixed(1)}%` : '0%';
+
+        const escapedName = String(name).replace(/"/g, '""');
+        
+        csvData += `"${escapedName}","${target}","${current}","${progress}"\n`;
+      });
+    }
+
+    exportToCSV(csvData, filename);
   };
 
   // 1. Dynamic Calculations
@@ -209,15 +256,26 @@ export default function Reports() {
               <span className="font-display-lg text-headline-lg text-secondary font-bold gold-glow">
                 +14.8% YTD
               </span>
-              <Button 
-                variant="secondary" 
-                className="text-[10px] py-1 px-3 mt-1 flex items-center gap-1"
-                onClick={handleDownloadPDF}
-                disabled={isDownloading || isLoading}
-              >
-                <span className="material-symbols-outlined text-[14px]">download</span>
-                {isDownloading ? 'Generating...' : 'Download PDF'}
-              </Button>
+              <div className="flex gap-2 mt-1">
+                <Button 
+                  variant="secondary" 
+                  className="text-[10px] py-1 px-3 flex items-center gap-1"
+                  onClick={handleDownloadPDF}
+                  disabled={isDownloading || isLoading}
+                >
+                  <span className="material-symbols-outlined text-[14px]">download</span>
+                  {isDownloading ? 'Generating...' : 'Download PDF'}
+                </Button>
+                <Button 
+                  variant="secondary" 
+                  className="text-[10px] py-1 px-3 flex items-center gap-1"
+                  onClick={handleExportCSV}
+                  disabled={isLoading}
+                >
+                  <span className="material-symbols-outlined text-[14px]">table_view</span>
+                  Export CSV
+                </Button>
+              </div>
               {downloadSuccess && (
                 <div id="pdf-download-success" className="text-[11px] text-primary font-bold mt-1 bg-primary/10 border border-primary/20 px-2 py-1 rounded animate-fade-in">
                   Report PDF downloaded successfully.

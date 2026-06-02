@@ -4,10 +4,11 @@ import {
   signOut, 
   signInWithPopup, 
   GoogleAuthProvider, 
-  onAuthStateChanged 
+  onAuthStateChanged,
+  sendPasswordResetEmail
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { auth, db } from './firebase';
+import { auth, db, parseFirebaseError } from './firebase';
 
 const isOffline = () => {
   return !import.meta.env.VITE_FIREBASE_API_KEY || 
@@ -148,6 +149,18 @@ export const authService = {
     // Real Firebase Logout
     await signOut(auth);
     return true;
+  },
+
+  async resetPassword(email) {
+    if (isOffline()) {
+      return { success: true };
+    }
+    try {
+      await sendPasswordResetEmail(auth, email);
+      return { success: true };
+    } catch (error) {
+      return { success: false, error: parseFirebaseError(error) };
+    }
   },
 
   async updateOnboardingStatus(uid, status = true, onboardingData = {}) {

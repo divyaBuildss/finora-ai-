@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { parseFirebaseError } from '../services/firebase';
+import { authService } from '../services/authService';
 import Navbar from '../components/Navbar';
 import Button from '../components/Button';
 
@@ -11,6 +12,13 @@ export default function Login() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Forgot Password States
+  const [showReset, setShowReset] = useState(false);
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetSuccess, setResetSuccess] = useState('');
+  const [resetError, setResetError] = useState('');
+  const [resetLoading, setResetLoading] = useState(false);
   
   const { login, googleLogin, currentUser } = useAuth();
   const navigate = useNavigate();
@@ -56,6 +64,102 @@ export default function Login() {
       setLoading(false);
     }
   };
+
+  const handleResetSubmit = async (e) => {
+    e.preventDefault();
+    setResetError('');
+    setResetSuccess('');
+    setResetLoading(true);
+    try {
+      const res = await authService.resetPassword(resetEmail);
+      if (res.success) {
+        setResetSuccess('Password reset link sent. Check your email.');
+      } else {
+        setResetError(res.error);
+      }
+    } catch (err) {
+      setResetError(parseFirebaseError(err));
+    } finally {
+      setResetLoading(false);
+    }
+  };
+
+  if (showReset) {
+    return (
+      <div className="bg-surface-container-lowest text-on-surface min-h-screen">
+        <Navbar />
+        
+        <main className="pt-32 flex items-center justify-center px-4 relative hero-gradient">
+          <div className="w-full max-w-md glass-card rounded-2xl p-8 relative z-10 animate-slide-up">
+            <div className="text-center mb-8">
+              <span className="font-label-sm text-label-sm text-secondary bg-secondary-container/20 px-4 py-1 rounded-full mb-4 inline-block uppercase tracking-widest border border-secondary/30">
+                Password Recovery
+              </span>
+              <h2 className="font-display-lg text-headline-lg font-bold">Reset Passcode</h2>
+              <p className="text-xs text-on-surface-variant mt-2">Enter your institutional email to receive a recovery link.</p>
+            </div>
+
+            {resetError && (
+              <div className="bg-red-950/40 border border-red-500/30 text-red-300 p-3 rounded-lg text-xs mb-6 text-center">
+                {resetError}
+              </div>
+            )}
+
+            {resetSuccess && (
+              <div className="bg-primary-container/10 border border-primary/30 text-primary p-3 rounded-lg text-xs mb-6 text-center emerald-glow">
+                {resetSuccess}
+              </div>
+            )}
+
+            <form onSubmit={handleResetSubmit} className="space-y-6 text-left">
+              <div>
+                <label className="block text-xs uppercase tracking-wider text-on-surface-variant mb-2 font-label-md">
+                  Institutional Email
+                </label>
+                <input
+                  type="email"
+                  required
+                  value={resetEmail}
+                  onChange={(e) => setResetEmail(e.target.value)}
+                  placeholder="client@finora-trust.com"
+                  className="w-full bg-surface-container border-b-2 border-subtle focus:border-primary px-4 py-3 rounded-lg text-on-surface outline-none transition-all"
+                />
+              </div>
+
+              <Button 
+                type="submit" 
+                variant="primary" 
+                className="w-full py-4 text-center justify-center flex items-center"
+              >
+                {resetLoading ? (
+                  <span className="animate-pulse font-bold">Sending Recovery Link...</span>
+                ) : (
+                  'Send Reset Link'
+                )}
+              </Button>
+            </form>
+
+            <div className="text-center mt-6">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowReset(false);
+                  setResetError('');
+                  setResetSuccess('');
+                }}
+                className="text-xs text-primary hover:underline font-bold"
+              >
+                Back to Secure Portal
+              </button>
+            </div>
+          </div>
+
+          {/* Decorative elements */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -z-10"></div>
+        </main>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-surface-container-lowest text-on-surface min-h-screen">
@@ -110,6 +214,20 @@ export default function Login() {
                 placeholder="••••••••••••"
                 className="w-full bg-surface-container border-b-2 border-subtle focus:border-primary px-4 py-3 rounded-lg text-on-surface outline-none transition-all"
               />
+              <div className="flex justify-end mt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowReset(true);
+                    setResetEmail(email);
+                    setResetError('');
+                    setResetSuccess('');
+                  }}
+                  className="text-[10px] text-primary hover:underline font-bold uppercase tracking-wider"
+                >
+                  Forgot Password?
+                </button>
+              </div>
             </div>
 
             <Button 
