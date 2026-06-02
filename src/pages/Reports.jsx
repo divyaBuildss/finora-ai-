@@ -35,6 +35,7 @@ export default function Reports() {
   const [goals, setGoals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadSuccess, setDownloadSuccess] = useState(false);
 
   useEffect(() => {
     const fetchReportsData = async () => {
@@ -58,6 +59,7 @@ export default function Reports() {
 
   const handleDownloadPDF = async () => {
     setIsDownloading(true);
+    setDownloadSuccess(false);
     const element = document.getElementById('report-content');
     if (!element) return setIsDownloading(false);
     
@@ -75,6 +77,8 @@ export default function Reports() {
       
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save('Finora-Wealth-Report.pdf');
+      setDownloadSuccess(true);
+      setTimeout(() => setDownloadSuccess(false), 5000);
     } catch (err) {
       console.error('Failed to generate PDF', err);
     } finally {
@@ -214,6 +218,11 @@ export default function Reports() {
                 <span className="material-symbols-outlined text-[14px]">download</span>
                 {isDownloading ? 'Generating...' : 'Download PDF'}
               </Button>
+              {downloadSuccess && (
+                <div id="pdf-download-success" className="text-[11px] text-primary font-bold mt-1 bg-primary/10 border border-primary/20 px-2 py-1 rounded animate-fade-in">
+                  Report PDF downloaded successfully.
+                </div>
+              )}
             </div>
           </div>
 
