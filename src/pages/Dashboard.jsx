@@ -4,6 +4,8 @@ import Sidebar from '../components/Sidebar';
 import StatCard from '../components/StatCard';
 import Skeleton from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
+import Loading from '../components/Loading';
+
 import { databaseService } from '../services/databaseService';
 import { useAuth } from '../hooks/useAuth';
 import { formatINR, calculateHealthScore } from '../utils/helpers';
@@ -68,8 +70,13 @@ export default function Dashboard() {
 
   const categoriesData = getCategoryBreakdown();
 
+  if (isLoading) {
+    return <Loading fullScreen />;
+  }
+
   return (
     <div className="bg-surface-container-lowest text-on-surface min-h-screen page-gradient">
+
       <Navbar />
       <Sidebar />
 
